@@ -1,0 +1,15 @@
+#fetchLink:hover{
+    cursor: pointer;
+}
+#fetchLink:active{
+    font-size: 40;
+}
+
+#map{
+    width: 1024px;
+    height: 550px;
+}
+
+body{
+    background-color: rgb(209, 209, 251);
+}
