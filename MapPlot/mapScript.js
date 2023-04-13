@@ -1,12 +1,21 @@
+// Project Overwatch : Map ip plotter
+// 
+// 
+// 4/8/2023
+// 
 var canvas = document.getElementById('map');
 var context = canvas.getContext('2d');
 var map = document.getElementById('mapImg');
 var pin = document.getElementById('pinImg');
-
-
-
 var myLink = document.getElementById('fetchLink');
+// Bad idea to declare global index, remove later.
+let ix = 0;
 
+const orgs = new Array();
+
+
+// Temp function which gets the user's input ip from the input field
+// and then plots it.
 myLink.onclick = function(){
     var ipv = document.getElementById('ipInput').value;
     console.log(ipv);
@@ -16,15 +25,18 @@ myLink.onclick = function(){
     else{
         alert("Not a valid IP");
     }
-    
 }
 
+// This function gets called when the window loads.
+// It draws the map image on the canvas.
 window.onload = function() {
-    // Draw map image on canvas
     context.drawImage(map, 0, 0, 1024, 550);
 
+    fetchCat()
     }
 
+// Function for converting a latitude and longitude to x, y coordinates
+// based on the size of the canvas.
 function getXYFromCoordinates(latitude, longitude) {
         const imageWidth = 1024;
         const imageHeight = 550;
@@ -35,9 +47,8 @@ function getXYFromCoordinates(latitude, longitude) {
         return { x, y };
     }
 
-
+// This function draws a circle on the map canvas at point x, y.
 function plotPoints(x, y){
-
     context.moveTo(x + 15, y);
     context.strokeStyle = "black";
     context.arc(x, y, 15, 0, 2 * Math.PI);
@@ -46,17 +57,17 @@ function plotPoints(x, y){
 
 }
 
+// This function draws a pin image on the map canvas at point x, y.
 function plotPointsPin(x, y){
     context.drawImage(pin, x -10, y -30, 20, 30);
 }
 
-
-
-
+// Core function for calling ipdata api.
+// This fuction also calls plotPoints().
 function fetchDataFromIP(ip){
 
     //  Need to hide our API key...
-    let APIKEY = "";
+    const APIKEY = "";
     try{
         var request = new XMLHttpRequest();
 
@@ -77,6 +88,15 @@ function fetchDataFromIP(ip){
 
             // Call plot points with coords
             plotPoints(location.x, location.y);
+
+            // Add orginization name to orgs array
+            orgs.push(ipData.asn.name);
+            console.log(orgs);
+            console.log(orgs[0]);
+
+            // Refresh orgs list
+            // This could be changed to run every x seconds rather than after each point plotted..
+            displayOrgs();
             }
         };
 
@@ -87,3 +107,14 @@ function fetchDataFromIP(ip){
         console.log("Error fetching data from ipdata...");
     }
 }
+
+// Function for adding orgs array to list in html
+function displayOrgs(){
+    const ul = document.getElementById('orgs-list');
+    let li = document.createElement("li");
+    let node = document.createTextNode(orgs[ix]);
+    li.appendChild(node);
+    ul.appendChild(li);
+    ix++;
+}
+
