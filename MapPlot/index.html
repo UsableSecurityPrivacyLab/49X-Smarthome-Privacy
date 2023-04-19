@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,27 +8,46 @@
     <title>Map Script</title>
 
     <link rel="stylesheet" href="./style/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lacquer&family=Source+Code+Pro&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    
+    <div id="container">
+        <div class="card">
+            <h1>IP Address Tracker</h1>
+            <img src="images/pin.png" alt="" width="100px">
+        </div>
 
-    <div class="map-area">
-        <canvas id="map" width="1024" height="550"></canvas>
-        <h2>Top Orginzations</h2>
-        <ul id="orgs-list">
-            
-        </ul>
+        <div class="map-area">
+            <canvas id="map" width="1024" height="550"></canvas>
+        </div>
+
+
+        <div class="card">
+            <h1>Manual Entry</h1>
+            <form action="" method="post">
+                <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
+                <p id="fetchLink"> Fetch </p>
+            </form>
+        </div>
+
+        <div class="card">
+            <h1>Top Orginzations</h1>
+            <ul id="orgs-list"></ul>
+        </div>
+
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+
+        <!-- Hidden images -->
+        <img src="images/map4.svg" alt="World Map" id="mapImg" style="display: none;">
+
     </div>
-
-    <img src="images/map4.svg" alt="World Map" id="mapImg" style="display: none;">
-    <img src="images/pin.png" alt="Pin" width="10px" id="pinImg" style="display: none;">
-
-    <form action="" method="post">
-        <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
-        <p id="fetchLink"> Fetch </p>
-    </form>
-
-
 </body>
-    <script src="mapScript.js"></script>
+<script src="mapScript.js"></script>
+
 </html>

@@ -10,8 +10,7 @@ var pin = document.getElementById('pinImg');
 var myLink = document.getElementById('fetchLink');
 // Bad idea to declare global index, remove later.
 let ix = 0;
-
-const orgs = new Array();
+var orgsCount = {};
 
 
 // Temp function which gets the user's input ip from the input field
@@ -31,8 +30,6 @@ myLink.onclick = function(){
 // It draws the map image on the canvas.
 window.onload = function() {
     context.drawImage(map, 0, 0, 1024, 550);
-
-    fetchCat()
     }
 
 // Function for converting a latitude and longitude to x, y coordinates
@@ -78,7 +75,7 @@ function fetchDataFromIP(ip){
         request.onreadystatechange = function () {
         if (this.readyState === 4) {
 
-            console.log(this.responseText);
+            // console.log(this.responseText);
 
             // Convert to JSON format
             const ipData = JSON.parse(this.responseText);
@@ -90,9 +87,8 @@ function fetchDataFromIP(ip){
             plotPoints(location.x, location.y);
 
             // Add orginization name to orgs array
-            orgs.push(ipData.asn.name);
-            console.log(orgs);
-            console.log(orgs[0]);
+            var num = ipData.asn.name;
+            orgsCount[num] = orgsCount[num] ? orgsCount[num] + 1 : 1;
 
             // Refresh orgs list
             // This could be changed to run every x seconds rather than after each point plotted..
@@ -103,18 +99,21 @@ function fetchDataFromIP(ip){
         request.send();
     }
     catch{
-        // alert("Error fetching data from ipdata...");
+        alert("Error fetching data from ipdata...");
         console.log("Error fetching data from ipdata...");
     }
 }
 
-// Function for adding orgs array to list in html
+//function which displays each item in the orgsCount object in the html
 function displayOrgs(){
     const ul = document.getElementById('orgs-list');
-    let li = document.createElement("li");
-    let node = document.createTextNode(orgs[ix]);
-    li.appendChild(node);
-    ul.appendChild(li);
-    ix++;
+    ul.innerHTML = "";
+    for (var key in orgsCount) {
+        let li = document.createElement("li");
+        let node = document.createTextNode(key + " : " + orgsCount[key]);
+        li.appendChild(node);
+        ul.appendChild(li);
+    }
 }
+
 
