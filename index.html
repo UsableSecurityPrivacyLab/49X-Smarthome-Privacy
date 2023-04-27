@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Script</title>
+
+    <link rel="stylesheet" href="./style/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lacquer&family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="container">
+        <div class="card">
+            <h1>IP Address Tracker</h1>
+            <img src="images/pin.png" alt="" width="100px">
+        </div>
+
+        <div class="map-area">
+            <canvas id="map" width="1024" height="550"></canvas>
+        </div>
+
+
+        <div class="card">
+            <h1>Manual Entry</h1>
+            <form action="" method="post">
+                <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
+                <p id="fetchLink"> Fetch </p>
+            </form>
+        </div>
+
+        <div class="card">
+            <h1>Top Orginzations</h1>
+            <ul id="orgs-list"></ul>
+        </div>
+
+        <div class="card">
+            <div id="chartBox">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card"></div>
+        <div class="card"></div>
+
+        <!-- Hidden images -->
+        <img src="images/map4.svg" alt="World Map" id="mapImg" style="display: none;">
+
+    </div>
+</body>
+
+<script src="mapScript.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const ctx = document.getElementById('myChart');
+
+    var orgNames = [];
+    var orgCounts = [];
+
+var config = {
+            type: 'pie',
+            data: {
+                labels: orgNames,
+                datasets: [{
+                    label: '# of Pings',
+                    data: orgCounts,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                plugins:{
+                    colors:{
+                        forceOverride: true,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        var pieChart = new Chart(ctx, config);
+
+
+    function updateChart() {
+
+        //for each item in orgsCount, add the keys to an array and the values to another array
+        let i = 0;
+        for (var key in orgsCount) {
+            orgNames[i] = key;
+            orgCounts[i] = orgsCount[key];
+            i++;
+        }
+
+        //push the new data to the chart
+        pieChart.data.labels = orgNames;
+        pieChart.data.datasets[0].data = orgCounts;
+
+        pieChart.update();
+    }
+
+    setInterval(updateChart, 2000);
+
+</script>
+
+</html>
