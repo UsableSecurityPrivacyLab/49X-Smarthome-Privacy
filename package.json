@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "chart.js": "^4.2.1",
+    "jsvectormap": "^1.5.3",
     "pg": "^8.10.0"
   }
 }

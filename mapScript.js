@@ -3,15 +3,11 @@
 // 
 // 4/8/2023
 // 
-var canvas = document.getElementById('map');
-var context = canvas.getContext('2d');
-var map = document.getElementById('mapImg');
-var pin = document.getElementById('pinImg');
-var myLink = document.getElementById('fetchLink');
-// Bad idea to declare global index, remove later.
-let ix = 0;
-var orgsCount = {};
 
+var myLink = document.getElementById('fetchLink');
+var markerData = {};
+var orgsCount = {};
+var ix = 0;
 
 // Temp function which gets the user's input ip from the input field
 // and then plots it.
@@ -26,41 +22,7 @@ myLink.onclick = function () {
     }
 }
 
-// This function gets called when the window loads.
-// It draws the map image on the canvas.
-window.onload = function () {
-    context.drawImage(map, 0, 0, 1024, 550);
-}
-
-// Function for converting a latitude and longitude to x, y coordinates
-// based on the size of the canvas.
-function getXYFromCoordinates(latitude, longitude) {
-    const imageWidth = 1024;
-    const imageHeight = 550;
-
-    const x = ((longitude + 180) / 360) * imageWidth;
-    const y = ((latitude * -1) + 90) / 180 * imageHeight;
-
-    return { x, y };
-}
-
-// This function draws a circle on the map canvas at point x, y.
-function plotPoints(x, y) {
-    context.moveTo(x + 15, y);
-    context.strokeStyle = "black";
-    context.arc(x, y, 15, 0, 2 * Math.PI);
-    context.stroke();
-    context.strokeStyle = 'rgba(' + [0, 0, 0, 0] + ')';
-
-}
-
-// This function draws a pin image on the map canvas at point x, y.
-function plotPointsPin(x, y) {
-    context.drawImage(pin, x - 10, y - 30, 20, 30);
-}
-
 // Core function for calling ipdata api.
-// This fuction also calls plotPoints().
 function fetchDataFromIP(ip) {
 
     //  Need to hide our API key...
@@ -75,23 +37,23 @@ function fetchDataFromIP(ip) {
         request.onreadystatechange = function () {
             if (this.readyState === 4) {
 
-                // console.log(this.responseText);
+                console.log(this.responseText)
 
                 // Convert to JSON format
                 const ipData = JSON.parse(this.responseText);
 
-                // Call getXY with lat/long values
-                var location = getXYFromCoordinates(ipData.latitude, ipData.longitude);
-
-                // Call plot points with coords
-                plotPoints(location.x, location.y);
+                //add orginization name, ip, city, and region to markerData object
+                markerData[ix] = {org: ipData.asn.name, ip: ipData.ip, city: ipData.city, region: ipData.region};
+                ix++;
 
                 // Add orginization name to orgs array
                 var num = ipData.asn.name;
                 orgsCount[num] = orgsCount[num] ? orgsCount[num] + 1 : 1;
 
-                // Refresh orgs list
-                // This could be changed to run every x seconds rather than after each point plotted..
+                // create a marker object and add it to the markers array
+                addMarker(ipData.asn.name, ipData.latitude, ipData.longitude);
+
+                // Refresh orgs list <ul>
                 displayOrgs();
             }
         };
@@ -116,4 +78,7 @@ function displayOrgs() {
     }
 }
 
-
+// function which makes a marker object and adds it to the markers array
+function addMarker(org, lat, long) {
+    world.addMarkers({ name: org, coords: [lat, long] });
+}

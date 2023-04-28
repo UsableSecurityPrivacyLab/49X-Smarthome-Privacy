@@ -57,7 +57,33 @@ body{
     border: 7px solid var(--color2);
     border-radius: 2%;
 
+    color: aliceblue;
+
     overflow: hidden;
+}
+
+.card:hover{
+    /* cursor: pointer; */
+    background-color: var(--color2);
+    border: 7px solid var(--color1);
+}
+
+#markerInfo{
+    flex-direction: column;
+    overflow: auto;
+    overflow-x: hidden;
+}
+#markerInfo h1{
+    margin-bottom: 0;
+}
+#markerInfo h3{
+    margin-top: 0;
+}
+#markerInfo div{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 90%;
+    word-wrap: break-word;
 }
 
 .map-area{

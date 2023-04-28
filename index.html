@@ -12,17 +12,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lacquer&family=Source+Code+Pro&display=swap" rel="stylesheet">
+
+    <!-- JS Vectormap -->
+    <link rel="stylesheet" href="node_modules\jsvectormap\dist\css\jsvectormap.css" />
 </head>
 
 <body>
     <div id="container">
         <div class="card">
             <h1>IP Address Tracker</h1>
-            <img src="images/pin.png" alt="" width="100px">
         </div>
 
         <div class="map-area">
-            <canvas id="map" width="1024" height="550"></canvas>
+            <div id="map1" style="width: 1024px; height: 550px"></div>
         </div>
 
 
@@ -45,49 +47,108 @@
             </div>
         </div>
 
-        <div class="card"></div>
+        <div class="card" id="markerInfo">
+            <h1>Choose Marker</h1>
+            <h3>to view its info.</h3>
+
+            <div id="org"></div>
+            <div id="ip"></div>
+            <div id="city"></div>
+            <div id="region"></div>
+            <div id="emoji_unicode"></div>
+        </div>
+
         <div class="card"></div>
 
         <!-- Hidden images -->
         <img src="images/map4.svg" alt="World Map" id="mapImg" style="display: none;">
 
     </div>
+
 </body>
 
 <script src="mapScript.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- JS Vector map -->
+<script src="node_modules\jsvectormap\dist\js\jsvectormap.js"></script>
+<script src="node_modules\jsvectormap\dist\maps\world.js"></script>
+
+<script>
+    const world = new jsVectorMap({
+        selector: '#map1',
+        backgroundColor: '#b5abd6',
+        markers: [],
+        onMarkerClick: function (event, index) {
+            var markerOrg = document.getElementById("org");
+            var markerIP = document.getElementById("ip");
+            var markerCity = document.getElementById("city");
+            var markerRegion = document.getElementById("region");
+            var markerEmoji = document.getElementById("emoji_unicode");
+
+            markerOrg.innerText = "Organization: " + markerData[index].org;
+            markerIP.innerText = "IP Address: " + markerData[index].ip;
+            markerCity.innerText = "City: " + markerData[index].city;
+            markerRegion.innerText = "Region: " + markerData[index].region;
+        },
+
+        markerStyle: {
+            initial: {
+                stroke: 'white',
+                strokeWidth: 2.5,
+                fill: '#8ce7f5',
+                fillOpacity: 1
+            },
+            hover: {
+                fill: '#06b8d4',
+            },
+        },
+
+        regionStyle: {
+            initial: {
+                fill: '#695e8c',
+                stroke: "#676767",
+                strokeWidth: 0.3,
+                fillOpacity: 1
+            }
+        }
+    })
+
+</script>
+
+<!-- Pie Chart -->
 <script>
 
-const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart');
 
     var orgNames = [];
     var orgCounts = [];
 
-var config = {
-            type: 'pie',
-            data: {
-                labels: orgNames,
-                datasets: [{
-                    label: '# of Pings',
-                    data: orgCounts,
-                    borderWidth: 1,
-                }]
+    var config = {
+        type: 'pie',
+        data: {
+            labels: orgNames,
+            datasets: [{
+                label: '# of Pings',
+                data: orgCounts,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            plugins: {
+                colors: {
+                    forceOverride: true,
+                }
             },
-            options: {
-                plugins:{
-                    colors:{
-                        forceOverride: true,
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        };
+        }
+    };
 
-        var pieChart = new Chart(ctx, config);
+    var pieChart = new Chart(ctx, config);
 
 
     function updateChart() {
