@@ -18,7 +18,7 @@
 </head>
 
 <body>
-       
+
     <div class="devices">
         <img class="logo" src="images/logo.jpg" alt="logo">
         <div class="dList">
@@ -32,43 +32,63 @@
 
     <div id="container">
 
-        
+        <div class="row1">
+
             <div id="map1"></div>
 
             <div id="markerInfo">
                 <h1>Choose Marker</h1>
                 <h3>to view its info.</h3>
-    
-                <div id="org"></div>
-                <div id="ip"></div>
-                <div id="city"></div>
-                <div id="region"></div>
-                <div id="emoji_unicode"></div>
+
+                <p id="org">Organization: ---</p>
+                <p id="ip">IP Address: ---</p>
+                <p id="city">City: ---</p>
+                <p id="region">Region: ---</p>
+                <p id="emoji_unicode"></p>
             </div>
-      
 
-
-        <div class="card">
-            <h1>Manual Entry</h1>
-            <form action="" method="post">
-                <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
-                <p id="fetchLink"> Fetch </p>
-            </form>
         </div>
 
-        <div class="card">
-            <h1>Top Orginzations</h1>
-            <ul id="orgs-list"></ul>
-        </div>
+        <div class="row2">
 
-        <div class="card">
-            <div id="chartBox">
-                <canvas id="myChart"></canvas>
+            <div class="card">
+                <h1>Manual Entry</h1>
+                <form action="" method="post">
+                    <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
+                    <p id="fetchLink"> Fetch </p>
+                </form>
             </div>
+
+            <div class="card">
+                <h1>Top Orginzations</h1>
+                <p>Name : Times Pinged</p>
+                <ul id="orgs-list">
+                    <li>--- : ---</li>
+                    <li>--- : ---</li>
+                    <li>--- : ---</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div id="chartBox">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row3">
+
+            <div class="freqGraph">
+                <h1>Frequency Graph</h1>
+                <div id="freqGraph"></div>
+            </div>
+
         </div>
 
 
-        <div class="card"></div>
+
+        <!-- <div class="card"></div> -->
 
         <!-- Hidden images -->
         <img src="images/map4.svg" alt="World Map" id="mapImg" style="display: none;">
