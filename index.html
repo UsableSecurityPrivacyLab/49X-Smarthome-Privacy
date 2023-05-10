@@ -53,8 +53,8 @@
         <div class="row3">
 
             <div class="freqGraph">
-                <h1>Frequency Graph</h1>
-                <div id="freqGraph"></div>
+                <!-- <h1>Frequency Graph</h1> -->
+                <canvas id="freqChart"></canvas>
             </div>
 
         </div>
@@ -99,7 +99,7 @@
 </body>
 
 <script src="mapScript.js"></script>
-<script src="db.js" type="module"></script>
+<!-- <script src="db.js" type="module"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- JS Vector map -->
@@ -112,6 +112,10 @@
         backgroundColor: '#b5abd6',
         markers: [],
         onMarkerClick: function (event, index) {
+
+            console.log(markerData);
+            console.log(index);
+
             var markerOrg = document.getElementById("org");
             var markerIP = document.getElementById("ip");
             var markerCity = document.getElementById("city");
@@ -150,18 +154,27 @@
 
 <!-- Pie Chart -->
 <script>
+    Chart.defaults.color = "#fff";
 
     const ctx = document.getElementById('myChart');
+    const ctx2 = document.getElementById('freqChart');
 
     var orgNames = [];
     var orgCounts = [];
 
+    var timeDates = [];
+    var timeCounts = [];
+
+    // Config for Pie Chart
+    // 
     var config = {
         type: 'pie',
         data: {
-            labels: orgNames,
+            labels: {
+                orgNames
+            },
             datasets: [{
-                label: '# of Pings',
+                label: 'Number of Pings',
                 data: orgCounts,
                 borderWidth: 1,
             }]
@@ -180,12 +193,60 @@
         }
     };
 
+    // Config for Frequency Graph
+    // 
+    const freqConfig = {
+        type: 'bar',
+        data: {
+            labels: timeDates,
+            datasets: [{
+                label: 'Number of Pings',
+                data: timeCounts,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Frequency of Pings',
+                }
+            }
+        },
+        scales: {
+            x: {
+                type: 'time',
+                time: {
+                    // Luxon format string
+                    tooltipFormat: 'DD T'
+                },
+                title: {
+                    display: true,
+                    text: 'Date'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'value'
+                }
+            }
+        },
+    };
+
     var pieChart = new Chart(ctx, config);
+    var freqChart = new Chart(ctx2, freqConfig);
 
 
     function updateChart() {
 
         //for each item in orgsCount, add the keys to an array and the values to another array
+        // 
+        // orgsCount has the format of {orgName: count, orgName: count, ...}
         let i = 0;
         for (var key in orgsCount) {
             orgNames[i] = key;
@@ -193,11 +254,22 @@
             i++;
         }
 
+        let j = 0;
+        for (var key in timeStamps) {
+            timeDates[j] = key;
+            timeCounts[j] = timeStamps[key];
+            j++;
+        }
+
         //push the new data to the chart
         pieChart.data.labels = orgNames;
         pieChart.data.datasets[0].data = orgCounts;
 
+        freqChart.data.labels = timeDates;
+        freqChart.data.datasets[0].data = timeCounts;
+
         pieChart.update();
+        freqChart.update();
     }
 
     setInterval(updateChart, 2000);

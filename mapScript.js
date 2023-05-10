@@ -9,6 +9,8 @@ var markerData = {};
 var orgsCount = {};
 var ix = 0;
 
+var timeStamps = {};
+
 // Temp function which gets the user's input ip from the input field
 // and then plots it.
 myLink.onclick = function () {
@@ -26,7 +28,7 @@ myLink.onclick = function () {
 function fetchDataFromIP(ip) {
 
     //  Need to hide our API key...
-    const APIKEY = "";
+    const APIKEY = "ae34d6dcc7cb3e2a8c7cf4de0b40b3f2a4bdf64f6f4dd530fb840269";
     try {
         var request = new XMLHttpRequest();
 
@@ -37,14 +39,27 @@ function fetchDataFromIP(ip) {
         request.onreadystatechange = function () {
             if (this.readyState === 4) {
 
-                console.log(this.responseText)
+                // console.log(this.responseText);
 
                 // Convert to JSON format
                 const ipData = JSON.parse(this.responseText);
 
+                // Add timestamp to timeStamp object
+                let time = ipData.time_zone.current_time;
+                timeStamps[time] = timeStamps[time] ? timeStamps[time] + 1 : 1;
+
                 //add orginization name, ip, city, and region to markerData object
+                //if the ip is already in the object, do not add it again
+                let exists = false;
+                for (var key in markerData) {
+                    if (markerData[key].ip === ipData.ip) {
+                        exists = true;
+                    }
+                }
+                if (!exists) {
                 markerData[ix] = {org: ipData.asn.name, ip: ipData.ip, city: ipData.city, region: ipData.region};
                 ix++;
+                }
 
                 // Add orginization name to orgs array
                 var num = ipData.asn.name;
