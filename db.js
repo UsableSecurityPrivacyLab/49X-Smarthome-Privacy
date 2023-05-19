@@ -2,11 +2,11 @@ const { Client } = require('pg')
  
  
 const client = new Client({
-  user: 'postgres',
+  user: 'aretha',
   host: 'localhost',
   database: 'test',
-  password: '',
-  port: 922,
+  password: 'password',
+  port: 5432,
 })
 
 client.connect((err) => {
@@ -17,7 +17,12 @@ client.connect((err) => {
     }
   })
  
-// client.query('SELECT NOW()', (err, res) => {
-//   console.log(err, res)
-//   client.end()
-// })
+client.query('SELECT * FROM devices', (err, res) => {
+
+  console.log(res.rows);
+
+  var data = res.rows;
+
+  // console.log(err, res)
+  client.end()
+})
