@@ -97,4 +97,3 @@ function displayOrgs() {
 function addMarker(org, lat, long) {
     world.addMarkers({ name: org, coords: [lat, long] });
 }
-

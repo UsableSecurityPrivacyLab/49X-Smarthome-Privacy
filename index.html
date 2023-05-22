@@ -87,7 +87,9 @@
 
         </div>
 
-
+        <div class="card">
+            <button onclick="pullData()">PLEASE WORK</button>
+        </div>
 
         <!-- <div class="card"></div> -->
 
@@ -99,12 +101,32 @@
 </body>
 
 <script src="mapScript.js"></script>
-<!-- <script src="db.js" type="module"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- JS Vector map -->
 <script src="node_modules\jsvectormap\dist\js\jsvectormap.js"></script>
 <script src="node_modules\jsvectormap\dist\maps\world.js"></script>
+
+<script>
+
+    // 
+    // THIS FUNCTION GRABS FROM THE DATABASE
+    // 
+
+    function pullData(){
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET","http://localhost:3000/getstring", true);
+        xmlhttp.onreadystatechange=function(){
+         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            string=xmlhttp.responseText;
+
+            console.log("FETCHED FROM DB: " + string);
+            }
+        }
+         xmlhttp.send();
+    }
+</script>
+
 
 <script>
     const world = new jsVectorMap({
