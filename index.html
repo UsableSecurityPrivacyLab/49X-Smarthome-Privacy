@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="node_modules\jsvectormap\dist\css\jsvectormap.css" />
 </head>
 
+<!-- <body onunload="closeDB()" onload="openDB()" > -->
 <body>
 
     <div class="devices">
@@ -107,17 +108,42 @@
 <script src="node_modules\jsvectormap\dist\js\jsvectormap.js"></script>
 <script src="node_modules\jsvectormap\dist\maps\world.js"></script>
 
+<!--  -->
+<!-- NODE SERVER SCRIPTS -->
+<!--  -->
 <script>
+
+    function openDB(){
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET","http://localhost:3000/openDB", true);
+        xmlhttp.onreadystatechange=function(){
+         if (xmlhttp.readyState==4 && xmlhttp.status==200){}
+        }
+         xmlhttp.send();
+    }
+    function closeDB(){
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET","http://localhost:3000/closeDB", true);
+        xmlhttp.onreadystatechange=function(){
+         if (xmlhttp.readyState==4 && xmlhttp.status==200){}
+        }
+         xmlhttp.send();
+    }
+
 
     // 
     // THIS FUNCTION GRABS FROM THE DATABASE
     // 
 
     function pullData(){
+
+        const query = "SELECT * FROM geodata"
+
         xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("GET","http://localhost:3000/getstring", true);
+        xmlhttp.open("GET","http://localhost:3000/getQuery", true);
         xmlhttp.onreadystatechange=function(){
          if (xmlhttp.readyState==4 && xmlhttp.status==200){
+
             string=xmlhttp.responseText;
 
             console.log("FETCHED FROM DB: " + string);
@@ -125,6 +151,7 @@
         }
          xmlhttp.send();
     }
+
 </script>
 
 
