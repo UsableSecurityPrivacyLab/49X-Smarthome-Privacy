@@ -19,6 +19,7 @@ async function handleRequest(request, response) {
     //  
     let detach = request.url.split('?'); // This separates the url into 2 parts: [/getQuery] and [SELECT_*_FROM_geodata]
     let query1 = detach[1].split('_').join(' '); // This replaces '_' with ' '
+    query1 = query1.split('%27').join('\'');
 
     console.log(query1) // Final result: 'SELECT * FROM geodata'
 
@@ -50,8 +51,19 @@ async function handleRequest(request, response) {
       }
   
       // The data we return will need to change based on the query...
-      const data = res.rows[0].ip;
+      var data = "";
       console.log('Geodata table:');
+
+      for (let i = 0; i < res.rows.length; i++) {
+        data += res.rows[i].ip + "__";
+        data += res.rows[i].lat + "__";
+        data += res.rows[i].lon + "__";
+        data += res.rows[i].c_code + "__";
+        data += res.rows[i].c_name + "__";
+        data += res.rows[i].domain + "~~";
+      }
+    
+
       console.log(data);
 
       response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');

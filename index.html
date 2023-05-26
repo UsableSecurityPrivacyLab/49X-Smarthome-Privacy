@@ -89,7 +89,7 @@
         </div>
 
         <div class="card">
-            <button onclick="pullData()">PLEASE WORK</button>
+            <button onclick="pullData('SELECT_*_FROM_geodata')">Query First IP from geodata</button>
         </div>
 
         <!-- <div class="card"></div> -->
@@ -116,23 +116,7 @@
     // THIS FUNCTION GRABS FROM THE DATABASE
     // 
 
-    function pullData(){
 
-        // Format for sending a query request to NODE server. Use '_' instead of ' ' for spaces.
-        const query = "SELECT_*_FROM_geodata"
-
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("GET","http://localhost:3000/getQuery?" + query, true);
-        xmlhttp.onreadystatechange=function(){
-         if (xmlhttp.readyState==4 && xmlhttp.status==200){
-
-            string=xmlhttp.responseText;
-
-            console.log("FETCHED FROM DB: " + string);
-            }
-        }
-         xmlhttp.send();
-    }
 
 </script>
 
