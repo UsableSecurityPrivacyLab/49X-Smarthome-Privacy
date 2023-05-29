@@ -18,11 +18,12 @@
 </head>
 
 <body>
-<!-- <body> -->
+    <!-- <body> -->
 
     <div class="devices">
         <img class="logo" src="images/logo.jpg" alt="logo">
         <div class="dList">
+            <h1 onclick="pullData('SELECT_*_FROM_geodata')">All</h1>
             <h1>Echo</h1>
             <h1>Google Home</h1>
             <h1>Temp</h1>
@@ -33,7 +34,7 @@
 
     <div id="container">
 
-        <div class="row1">
+        <div class="row-map">
 
             <div id="map1"></div>
 
@@ -51,7 +52,7 @@
         </div>
 
 
-        <div class="row3">
+        <div class="row-graph">
 
             <div class="freqGraph">
                 <!-- <h1>Frequency Graph</h1> -->
@@ -60,10 +61,11 @@
 
         </div>
 
-        <div class="row2">
+        <div class="row">
 
             <div class="card">
                 <h1>Manual Entry</h1>
+                <p>This widget is for for testing purposes.</p>
                 <form action="" method="post">
                     <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
                     <p id="fetchLink"> Fetch </p>
@@ -88,9 +90,37 @@
 
         </div>
 
-        <div class="card">
-            <button onclick="pullData('SELECT_*_FROM_geodata')">Query First IP from geodata</button>
+
+        <div class="row">
+
+
+            <div class="card">
+                <h1>Most Traffic</h1>
+
+                <h3>by Device</h3>
+
+                <ul id="traffic-list">
+                    <li>---</li>
+                    <li>---</li>
+                    <li>---</li>
+                </ul>
+
+                <p>W.I.P. Figure out how which devices are using the most network traffic...</p>
+            </div>
+
+            <div class="card">
+                <h1>Intruders?</h1>
+               
+
+                <h3 class="known-occupents">Number of known occupents: 4</h3>
+                <h3 class="predicted-occupents">Predicted # of current occupents: 6</h3>
+                <h3 class="intruders">Possible # of Intruders: 2</h3>
+
+                <p>W.I.P. Figure out how to determine how many iphones are on the network...</p>
+            </div>
+
         </div>
+
 
         <!-- <div class="card"></div> -->
 
@@ -108,17 +138,6 @@
 <script src="node_modules\jsvectormap\dist\js\jsvectormap.js"></script>
 <script src="node_modules\jsvectormap\dist\maps\world.js"></script>
 
-<!--  -->
-<!-- NODE SERVER SCRIPTS -->
-<!--  -->
-<script>
-    // 
-    // THIS FUNCTION GRABS FROM THE DATABASE
-    // 
-
-
-
-</script>
 
 
 <script>

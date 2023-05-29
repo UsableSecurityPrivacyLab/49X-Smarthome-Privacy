@@ -69,6 +69,11 @@ body{
 
     overflow: hidden;
 }
+.card p{
+    text-align: center;
+    margin-left: 1em;
+    margin-right: 1em;
+}
 
 .card:hover{
     /* cursor: pointer; */
@@ -138,6 +143,11 @@ body{
     margin-right: 8vw;
 }
 
+#traffic-list li{
+    margin-top: 2vh;
+    margin-right: 8vw;
+}
+
 .devices{
 
     height: 100vh;
@@ -168,7 +178,7 @@ body{
     width: 20vw;
 }
 
-.row1{
+.row-map{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -179,7 +189,7 @@ body{
     margin-right: 2vw;
 }
 
-.row2{
+.row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;

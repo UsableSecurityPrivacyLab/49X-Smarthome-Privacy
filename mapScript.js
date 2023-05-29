@@ -59,7 +59,7 @@ function fetchDataFromIP(ip) {
                     }
                 }
                 if (!exists) {
-                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, city: ipData.city, region: ipData.region };
+                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, region: ipData.region };
                     ix++;
                 }
 
@@ -108,6 +108,7 @@ function fetchDataFromIP(ip) {
 // =================================================================
 // All functions past this point do not involve the ipdata api.
 // They are called in sequence after fetching data from the DB.
+// Aretha should be calling the api and storing the data already.
 // =================================================================
 
 
@@ -206,7 +207,7 @@ function addMarkers(rows) {
             // Make a call to addMarker to actually plot the data on the world map.
             // ---------------------------------------------------------------------
             addMarker(rows[j])
-            markerData[ix] = { org: rows[j][4], ip: rows[j][0], city: null, region: rows[j][3] };
+            markerData[ix] = { org: rows[j][4], ip: rows[j][0], region: rows[j][3] };
             ix++;
         }
 

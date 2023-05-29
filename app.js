@@ -50,7 +50,9 @@ async function handleRequest(request, response) {
         connected = true;
       }
   
+      // ================================================================
       // The data we return will need to change based on the query...
+      // This currently only works if we query row(s) from geodata table.
       var data = "";
       console.log('Geodata table:');
 
