@@ -26,9 +26,6 @@
             <h1 onclick="pullData('SELECT_*_FROM_geodata')">All</h1>
             <h1>Echo</h1>
             <h1>Google Home</h1>
-            <h1>Temp</h1>
-            <h1>Temp</h1>
-            <h1>Temp</h1>
         </div>
     </div>
 
@@ -44,13 +41,22 @@
 
                 <p id="org">Organization: ---</p>
                 <p id="ip">IP Address: ---</p>
-                <p id="city">City: ---</p>
                 <p id="region">Region: ---</p>
                 <p id="emoji_unicode"></p>
             </div>
 
         </div>
 
+
+        <div class="dropdown">
+            <button class="dropbtn">Select Timeframe</button>
+            <div class="dropdown-content">
+              <p onclick="updateTimeScale('hour')">Previous Hour</p>
+              <p onclick="updateTimeScale('day')">Previous Day</p>
+              <p onclick="updateTimeScale('week')">Previous Week</p>
+              <p onclick="updateTimeScale('month')">Previous Month</p>
+            </div>
+          </div>
 
         <div class="row-graph">
 
@@ -63,35 +69,17 @@
 
         <div class="row">
 
-            <div class="card">
-                <h1>Manual Entry</h1>
-                <p>This widget is for for testing purposes.</p>
-                <form action="" method="post">
-                    <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
-                    <p id="fetchLink"> Fetch </p>
-                </form>
-            </div>
 
             <div class="card">
-                <h1>Top Orginzations</h1>
-                <p>Name : Times Pinged</p>
-                <ul id="orgs-list">
-                    <li>--- : ---</li>
-                    <li>--- : ---</li>
-                    <li>--- : ---</li>
-                </ul>
+                <h1>Intruders?</h1>
+               
+
+                <h3 class="known-occupents">Number of known occupents: 4</h3>
+                <h3 class="predicted-occupents">Predicted # of current occupents: 6</h3>
+                <h3 class="intruders">Possible # of Intruders: 2</h3>
+
+                <p>W.I.P. Figure out how to determine how many iphones are on the network...</p>
             </div>
-
-            <div class="card">
-                <div id="chartBox">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="row">
 
 
             <div class="card">
@@ -108,16 +96,29 @@
                 <p>W.I.P. Figure out how which devices are using the most network traffic...</p>
             </div>
 
+
             <div class="card">
-                <h1>Intruders?</h1>
-               
-
-                <h3 class="known-occupents">Number of known occupents: 4</h3>
-                <h3 class="predicted-occupents">Predicted # of current occupents: 6</h3>
-                <h3 class="intruders">Possible # of Intruders: 2</h3>
-
-                <p>W.I.P. Figure out how to determine how many iphones are on the network...</p>
+                <div id="chartBox">
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
+
+        </div>
+
+
+        <div class="row">
+
+
+
+            <div class="card">
+                <h1>Manual Entry</h1>
+                <p>This widget is for for testing purposes.</p>
+                <form action="" method="post">
+                    <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
+                    <p id="fetchLink"> Fetch </p>
+                </form>
+            </div>
+
 
         </div>
 
@@ -152,13 +153,11 @@
 
             var markerOrg = document.getElementById("org");
             var markerIP = document.getElementById("ip");
-            var markerCity = document.getElementById("city");
             var markerRegion = document.getElementById("region");
             var markerEmoji = document.getElementById("emoji_unicode");
 
             markerOrg.innerText = "Organization: " + markerData[index].org;
             markerIP.innerText = "IP Address: " + markerData[index].ip;
-            markerCity.innerText = "City: " + markerData[index].city;
             markerRegion.innerText = "Region: " + markerData[index].region;
         },
 

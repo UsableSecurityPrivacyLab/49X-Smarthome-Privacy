@@ -214,3 +214,45 @@ function addMarkers(rows) {
     }
 
 }
+
+// ===============================================================
+// This function will update the timeScale varibale.
+// Timescale is simply a WHERE clause string that will be appended
+// to the end of queries to specify a date range.
+// 'curDate' is today's date, and 'date' is the other end of the
+// scale. (The left side of the range)
+// ==============================================================
+
+// WIP: We might need to remove the '(Pacific Standard Time)' appended to the end of each
+// date. This depends on how postgres timestamps actually look.
+var timeScale = '';
+
+function updateTimeScale(scale){
+
+    const curDate = new Date();
+    const date = new Date(curDate.getFullYear(), curDate.getMonth(), curDate.getDate(), curDate.getHours());
+
+    if(scale == 'hour'){
+        console.log('================ Updating timescale ================')
+        date.setHours(date.getHours()-1)
+        timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+    }
+    else if(scale == 'day'){
+        console.log('================ Updating timescale ================')
+        date.setDate(date.getDate()-1)
+        timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+    }
+    else if(scale == 'week'){
+        console.log('================ Updating timescale ================')
+        date.setDate(date.getDate()-7)
+        timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+    }
+    else if(scale == 'month'){
+        console.log('================ Updating timescale ================')
+        date.setDate(date.getDate()-30)
+        timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+
+        console.log(timeScale) 
+    }
+
+}
