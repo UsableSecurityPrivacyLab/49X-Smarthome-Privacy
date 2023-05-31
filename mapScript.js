@@ -59,7 +59,7 @@ function fetchDataFromIP(ip) {
                     }
                 }
                 if (!exists) {
-                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, region: ipData.region };
+                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, region: ipData.region, domain: ipData.domain};
                     ix++;
                 }
 
@@ -70,8 +70,6 @@ function fetchDataFromIP(ip) {
                 // create a marker object and add it to the markers array
                 addMarker(ipData.asn.name, ipData.latitude, ipData.longitude);
 
-                // Refresh orgs list <ul>
-                // displayOrgs();
             }
         };
 
@@ -82,25 +80,6 @@ function fetchDataFromIP(ip) {
         console.log("Error fetching data from ipdata...");
     }
 }
-
-// *********************************************************
-// This function wont be needed soon.
-// Shri told us to only display top orgs via the pie chart.
-// *********************************************************
-
-//function which displays each item in the orgsCount object in the html
-// function displayOrgs() {
-//     const ul = document.getElementById('orgs-list');
-//     ul.innerHTML = "";
-//     for (var key in orgsCount) {
-//         let li = document.createElement("li");
-//         let node = document.createTextNode(key + " : " + orgsCount[key]);
-//         li.appendChild(node);
-//         ul.appendChild(li);
-//     }
-// }
-
-
 
 
 
@@ -207,7 +186,7 @@ function addMarkers(rows) {
             // Make a call to addMarker to actually plot the data on the world map.
             // ---------------------------------------------------------------------
             addMarker(rows[j])
-            markerData[ix] = { org: rows[j][4], ip: rows[j][0], region: rows[j][3] };
+            markerData[ix] = { org: rows[j][4], ip: rows[j][0], region: rows[j][3], domain: rows[j][5] };
             ix++;
         }
 
@@ -223,8 +202,8 @@ function addMarkers(rows) {
 // scale. (The left side of the range)
 // ==============================================================
 
-// WIP: We might need to remove the '(Pacific Standard Time)' appended to the end of each
-// date. This depends on how postgres timestamps actually look.
+// WIP: We might need to alter the way the timeScale looks.
+// This depends on how postgres timestamps actually look.
 var timeScale = '';
 
 function updateTimeScale(scale){
@@ -236,23 +215,34 @@ function updateTimeScale(scale){
         console.log('================ Updating timescale ================')
         date.setHours(date.getHours()-1)
         timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+        // ---------------------------------------------------------------
+        // Currently hard-coded to split on PDT. Fix this in the future.
+        // ---------------------------------------------------------------
+        timeScale = timeScale.split('(Pacific Daylight Time)').join('_')
+        timeScale = timeScale.split(' ').join('_')
     }
     else if(scale == 'day'){
         console.log('================ Updating timescale ================')
         date.setDate(date.getDate()-1)
         timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+        timeScale = timeScale.split('(Pacific Daylight Time)').join('_')
+        timeScale = timeScale.split(' ').join('_')
+
+        console.log(timeScale)
     }
     else if(scale == 'week'){
         console.log('================ Updating timescale ================')
         date.setDate(date.getDate()-7)
         timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+        timeScale = timeScale.split('(Pacific Daylight Time)').join('_')
+        timeScale = timeScale.split(' ').join('_')
     }
     else if(scale == 'month'){
         console.log('================ Updating timescale ================')
         date.setDate(date.getDate()-30)
         timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
-
-        console.log(timeScale) 
+        timeScale = timeScale.split('(Pacific Daylight Time)').join('_')
+        timeScale = timeScale.split(' ').join('_')
     }
 
 }
