@@ -18,21 +18,20 @@
 </head>
 
 <body>
+    <!-- <body> -->
 
     <div class="devices">
         <img class="logo" src="images/logo.jpg" alt="logo">
         <div class="dList">
+            <h1 onclick="pullData(insertPacket)">All</h1>
             <h1>Echo</h1>
             <h1>Google Home</h1>
-            <h1>Temp</h1>
-            <h1>Temp</h1>
-            <h1>Temp</h1>
         </div>
     </div>
 
     <div id="container">
 
-        <div class="row1">
+        <div class="row-map">
 
             <div id="map1"></div>
 
@@ -42,42 +41,61 @@
 
                 <p id="org">Organization: ---</p>
                 <p id="ip">IP Address: ---</p>
-                <p id="city">City: ---</p>
                 <p id="region">Region: ---</p>
-                <p id="emoji_unicode"></p>
+                <p id="domain">Domain: ---</p>
             </div>
 
         </div>
 
 
-        <div class="row3">
+        <div class="dropdown">
+            <button class="dropbtn">Select Timeframe</button>
+            <div class="dropdown-content">
+              <p onclick="updateTimeScale('hour')">Previous Hour</p>
+              <p onclick="updateTimeScale('day')">Previous Day</p>
+              <p onclick="updateTimeScale('week')">Previous Week</p>
+              <p onclick="updateTimeScale('month')">Previous Month</p>
+            </div>
+          </div>
+
+        <div class="row-graph">
 
             <div class="freqGraph">
-                <h1>Frequency Graph</h1>
-                <div id="freqGraph"></div>
+                <!-- <h1>Frequency Graph</h1> -->
+                <canvas id="freqChart"></canvas>
             </div>
 
         </div>
 
-        <div class="row2">
+        <div class="row">
+
 
             <div class="card">
-                <h1>Manual Entry</h1>
-                <form action="" method="post">
-                    <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
-                    <p id="fetchLink"> Fetch </p>
-                </form>
+                <h1>Intruders?</h1>
+               
+
+                <h3 class="known-occupents">Number of known occupents: 4</h3>
+                <h3 class="predicted-occupents">Predicted # of current occupents: 6</h3>
+                <h3 class="intruders">Possible # of Intruders: 2</h3>
+
+                <p>W.I.P. Figure out how to determine how many iphones are on the network...</p>
             </div>
 
+
             <div class="card">
-                <h1>Top Orginzations</h1>
-                <p>Name : Times Pinged</p>
-                <ul id="orgs-list">
-                    <li>--- : ---</li>
-                    <li>--- : ---</li>
-                    <li>--- : ---</li>
+                <h1>Most Traffic</h1>
+
+                <h3>by Device</h3>
+
+                <ul id="traffic-list">
+                    <li>---</li>
+                    <li>---</li>
+                    <li>---</li>
                 </ul>
+
+                <p>W.I.P. Figure out how which devices are using the most network traffic...</p>
             </div>
+
 
             <div class="card">
                 <div id="chartBox">
@@ -87,6 +105,22 @@
 
         </div>
 
+
+        <div class="row">
+
+
+
+            <div class="card">
+                <h1>Manual Entry</h1>
+                <p>This widget is for for testing purposes.</p>
+                <form action="" method="post">
+                    <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
+                    <p id="fetchLink"> Fetch </p>
+                </form>
+            </div>
+
+
+        </div>
 
 
         <!-- <div class="card"></div> -->
@@ -99,7 +133,6 @@
 </body>
 
 <script src="mapScript.js"></script>
-<script src="db.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- JS Vector map -->
@@ -107,21 +140,31 @@
 <script src="node_modules\jsvectormap\dist\maps\world.js"></script>
 
 <script>
+    const queryGeodata = 'SELECT_*_FROM_geodata'
+    const insertGeodata = 'INSERT_INTO_geodata_VALUES_(\'2.127.255.255\',\'51.273799896240234\',\'0.4977000057697296\',\'GB\',\'Sky_Uk_Limited\',\'sky.uk\')'
+    const insertPacket = 'INSERT_INTO_packets_VALUES_(\'1\',\'Wed_May_24_2023_11:00:00_GMT\',\'127.0.0.1\',\'2.127.255.255\',\'f4:8e:38:a2:50:39\',\'0\',\'5500\',\'2.127.255.255\')'
+</script>
+
+
+<script>
     const world = new jsVectorMap({
         selector: '#map1',
         backgroundColor: '#b5abd6',
         markers: [],
         onMarkerClick: function (event, index) {
+
+            console.log(markerData);
+            console.log(index);
+
             var markerOrg = document.getElementById("org");
             var markerIP = document.getElementById("ip");
-            var markerCity = document.getElementById("city");
             var markerRegion = document.getElementById("region");
-            var markerEmoji = document.getElementById("emoji_unicode");
+            var markerDomain = document.getElementById("domain");
 
             markerOrg.innerText = "Organization: " + markerData[index].org;
             markerIP.innerText = "IP Address: " + markerData[index].ip;
-            markerCity.innerText = "City: " + markerData[index].city;
             markerRegion.innerText = "Region: " + markerData[index].region;
+            markerDomain.innerText = "Domain: " + markerData[index].domain;
         },
 
         markerStyle: {
@@ -150,18 +193,27 @@
 
 <!-- Pie Chart -->
 <script>
+    Chart.defaults.color = "#fff";
 
     const ctx = document.getElementById('myChart');
+    const ctx2 = document.getElementById('freqChart');
 
     var orgNames = [];
     var orgCounts = [];
 
+    var timeDates = [];
+    var timeCounts = [];
+
+    // Config for Pie Chart
+    // 
     var config = {
         type: 'pie',
         data: {
-            labels: orgNames,
+            labels: {
+                orgNames
+            },
             datasets: [{
-                label: '# of Pings',
+                label: 'Number of Pings',
                 data: orgCounts,
                 borderWidth: 1,
             }]
@@ -180,12 +232,60 @@
         }
     };
 
+    // Config for Frequency Graph
+    // 
+    const freqConfig = {
+        type: 'bar',
+        data: {
+            labels: timeDates,
+            datasets: [{
+                label: 'Number of Pings',
+                data: timeCounts,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Frequency of Pings',
+                }
+            }
+        },
+        scales: {
+            x: {
+                type: 'time',
+                time: {
+                    // Luxon format string
+                    tooltipFormat: 'DD T'
+                },
+                title: {
+                    display: true,
+                    text: 'Date'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'value'
+                }
+            }
+        },
+    };
+
     var pieChart = new Chart(ctx, config);
+    var freqChart = new Chart(ctx2, freqConfig);
 
 
     function updateChart() {
 
         //for each item in orgsCount, add the keys to an array and the values to another array
+        // 
+        // orgsCount has the format of {orgName: count, orgName: count, ...}
         let i = 0;
         for (var key in orgsCount) {
             orgNames[i] = key;
@@ -193,11 +293,22 @@
             i++;
         }
 
+        let j = 0;
+        for (var key in timeStamps) {
+            timeDates[j] = key;
+            timeCounts[j] = timeStamps[key];
+            j++;
+        }
+
         //push the new data to the chart
         pieChart.data.labels = orgNames;
         pieChart.data.datasets[0].data = orgCounts;
 
+        freqChart.data.labels = timeDates;
+        freqChart.data.datasets[0].data = timeCounts;
+
         pieChart.update();
+        freqChart.update();
     }
 
     setInterval(updateChart, 2000);

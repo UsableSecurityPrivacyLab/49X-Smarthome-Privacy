@@ -35,7 +35,7 @@ body{
     align-items: center;
     justify-content: space-between;
 
-    border: 4px solid white;
+    /* border: 4px solid white; */
     border-radius: 5px;
 
     margin-left: 20vw;
@@ -68,6 +68,11 @@ body{
     color: aliceblue;
 
     overflow: hidden;
+}
+.card p{
+    text-align: center;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .card:hover{
@@ -124,6 +129,7 @@ body{
     border-radius: 2%;
 }
 
+/* Box for pie chart */
 #chartBox{
     background-color: var(--color1);
 
@@ -131,10 +137,49 @@ body{
     height: 30vh;
 }
 
+
 #orgs-list li{
     margin-top: 2vh;
     margin-right: 8vw;
 }
+
+#traffic-list li{
+    margin-top: 2vh;
+    margin-right: 8vw;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+  }
+  
+  .dropdown-content p {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: black;
+  }
+
+  .dropdown-content p:hover{
+    background-color: var(--color2);
+    color: aliceblue;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+    cursor: pointer;
+  }
 
 .devices{
 
@@ -166,7 +211,7 @@ body{
     width: 20vw;
 }
 
-.row1{
+.row-map{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -177,7 +222,7 @@ body{
     margin-right: 2vw;
 }
 
-.row2{
+.row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -192,7 +237,7 @@ body{
 
 .freqGraph{
     width: 72vw;
-    height: 35vh;
+    height: 55vh;
     margin-right: 2vw;
     margin-top: 2vh;
     margin-bottom: 2vh;
@@ -202,8 +247,15 @@ body{
     border-radius: 2%;
 
     color: aliceblue;
+
+    overflow: hidden;
+    padding-bottom: 5vh;
 }
 .freqGraph h1{
     margin-top: 2vh;
+    margin-left: 2vw;
+}
+
+#freqChart{
     margin-left: 2vw;
 }
