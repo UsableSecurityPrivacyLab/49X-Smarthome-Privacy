@@ -1,11 +1,11 @@
-const { Client } = require('pg')
+const { Client } = require('pg').native
  
  
 const client = new Client({
-  user: 'postgres',
+  user: 'aretha',
   host: 'localhost',
   database: 'test',
-  password: '',
+  password: 'password',
   port: 922,
 })
 
