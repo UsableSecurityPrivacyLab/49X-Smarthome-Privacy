@@ -364,6 +364,7 @@ if __name__ == '__main__':
 
     # loop through categorisation tasks
     while(running[0]):
+        print("Capturing\n")
         log("Awake!");
         if running[0]:
             processEvents()

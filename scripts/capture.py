@@ -11,7 +11,7 @@ import traceback
 import ipaddress
 
 # constants
-DEBUG = False
+DEBUG = True
 
 # initialise vars
 timestamp = 0
@@ -34,7 +34,7 @@ def DatabaseInsert(packets):
     database = CONFIG['postgresql']['database']
     username = CONFIG['postgresql']['username']
     password = CONFIG['postgresql']['password']
-    conn = psycopg2.connect(f"dbname={database} user={username} password={password}")
+    conn = psycopg2.connect(f"host=localhost dbname={database} user={username} password={password}")
     cur = conn.cursor()
 
     insert = "INSERT INTO packets (time, src, dst, mac, len, proto, ext) VALUES "
