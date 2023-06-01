@@ -23,7 +23,7 @@
     <div class="devices">
         <img class="logo" src="images/logo.jpg" alt="logo">
         <div class="dList">
-            <h1 onclick="pullData('SELECT_*_FROM_geodata')">All</h1>
+            <h1 onclick="pullData(insertPacket)">All</h1>
             <h1>Echo</h1>
             <h1>Google Home</h1>
         </div>
@@ -42,7 +42,7 @@
                 <p id="org">Organization: ---</p>
                 <p id="ip">IP Address: ---</p>
                 <p id="region">Region: ---</p>
-                <p id="emoji_unicode"></p>
+                <p id="domain">Domain: ---</p>
             </div>
 
         </div>
@@ -139,6 +139,11 @@
 <script src="node_modules\jsvectormap\dist\js\jsvectormap.js"></script>
 <script src="node_modules\jsvectormap\dist\maps\world.js"></script>
 
+<script>
+    const queryGeodata = 'SELECT_*_FROM_geodata'
+    const insertGeodata = 'INSERT_INTO_geodata_VALUES_(\'2.127.255.255\',\'51.273799896240234\',\'0.4977000057697296\',\'GB\',\'Sky_Uk_Limited\',\'sky.uk\')'
+    const insertPacket = 'INSERT_INTO_packets_VALUES_(\'1\',\'Wed_May_24_2023_11:00:00_GMT\',\'127.0.0.1\',\'2.127.255.255\',\'f4:8e:38:a2:50:39\',\'0\',\'5500\',\'2.127.255.255\')'
+</script>
 
 
 <script>
@@ -154,11 +159,12 @@
             var markerOrg = document.getElementById("org");
             var markerIP = document.getElementById("ip");
             var markerRegion = document.getElementById("region");
-            var markerEmoji = document.getElementById("emoji_unicode");
+            var markerDomain = document.getElementById("domain");
 
             markerOrg.innerText = "Organization: " + markerData[index].org;
             markerIP.innerText = "IP Address: " + markerData[index].ip;
             markerRegion.innerText = "Region: " + markerData[index].region;
+            markerDomain.innerText = "Domain: " + markerData[index].domain;
         },
 
         markerStyle: {
