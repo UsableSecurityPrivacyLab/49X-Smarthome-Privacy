@@ -27,6 +27,12 @@ body{
     margin: 0;
 }
 
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #container{
     display: flex;
     flex-direction: column;
@@ -203,7 +209,7 @@ body{
     margin-bottom: 2vh;
     margin-right: 2vw;
 }
-.dList h1:hover{
+.dList .deviceName:hover{
     cursor: pointer;
     color: var(--color3);
 }
@@ -258,4 +264,11 @@ body{
 
 #freqChart{
     margin-left: 2vw;
+}
+
+.editBtn{
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    margin-right: 10px;
+    width: 30px;
 }
