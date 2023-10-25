@@ -32,6 +32,8 @@ function fetchDataFromIP(ip) {
     //  Need to hide our API key...
     const APIKEY = "ae34d6dcc7cb3e2a8c7cf4de0b40b3f2a4bdf64f6f4dd530fb840269";
     try {
+
+
         var request = new XMLHttpRequest();
 
         request.open('GET', 'https://api.ipdata.co/' + ip + '?api-key=' + APIKEY);
@@ -46,6 +48,8 @@ function fetchDataFromIP(ip) {
                 // Convert to JSON format
                 const ipData = JSON.parse(this.responseText);
 
+                // console.log(ipData)
+
                 // Add timestamp to timeStamp object
                 let time = ipData.time_zone.current_time;
                 timeStamps[time] = timeStamps[time] ? timeStamps[time] + 1 : 1;
@@ -59,7 +63,7 @@ function fetchDataFromIP(ip) {
                     }
                 }
                 if (!exists) {
-                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, region: ipData.region, domain: ipData.domain};
+                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, region: ipData.country_name, domain: ipData.asn.domain};
                     ix++;
                 }
 
@@ -67,9 +71,13 @@ function fetchDataFromIP(ip) {
                 var num = ipData.asn.name;
                 orgsCount[num] = orgsCount[num] ? orgsCount[num] + 1 : 1;
 
+  
                 // create a marker object and add it to the markers array
-                addMarker(ipData.asn.name, ipData.latitude, ipData.longitude);
-
+                // addMarker(ipData.asn.name, ipData.latitude, ipData.longitude);
+                world.addMarkers({ name: ipData.asn.name, coords: [ipData.latitude, ipData.longitude] });
+                
+                
+                
             }
         };
 
