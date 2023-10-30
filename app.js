@@ -26,11 +26,11 @@ async function handleRequest(request, response) {
 
     // Create a new Client for connection
     const client = new Client({
-      user: 'aretha',
+      user: 'david',
       host: 'localhost',
-      database: 'test',
-      password: 'password',
-      port: 5432,
+      database: 'homewatch',
+      password: '491-Home!privacy',
+      port: 5433,
     });
 
 

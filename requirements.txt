@@ -1,0 +1,15 @@
+psycopg2-binary
+pandas
+sklearn
+ipdata
+Pyshark
+lxml
+requests
+ipwhois
+flask
+flask_restful
+gunicorn
+dnspython
+tldextract
+tld
+websockets
