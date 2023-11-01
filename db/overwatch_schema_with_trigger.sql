@@ -29,7 +29,7 @@ create table geodata(
 	lat real not null,
 	lon real not null,
 	c_code varchar(2) not null,
-	c_name varchar(25) not null,
+	c_name varchar(55) not null,
 	domain varchar(30) not null,
 	tracker boolean default false
 );
