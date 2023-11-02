@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
 
 :root{
-    --color1: #635985;
+    /* --color1: #635985;
     --color2: #443C68;
     --color3: #393053;
-    --color4: #18122B;
+    --color4: #18122B; */
+
+    --color1: #253D5B;
+    --color2: #969696;
+    --color3: #B79D94;
+    --color4: #67697C;
 }
 
 

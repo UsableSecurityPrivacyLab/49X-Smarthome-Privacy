@@ -63,7 +63,7 @@ function fetchDataFromIP(ip) {
                     }
                 }
                 if (!exists) {
-                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, region: ipData.country_name, domain: ipData.asn.domain};
+                    markerData[ix] = { org: ipData.asn.name, ip: ipData.ip, region: ipData.country_code, domain: ipData.asn.domain};
                     ix++;
                 }
 
@@ -76,8 +76,14 @@ function fetchDataFromIP(ip) {
                 // addMarker(ipData.asn.name, ipData.latitude, ipData.longitude);
                 world.addMarkers({ name: ipData.asn.name, coords: [ipData.latitude, ipData.longitude] });
                 
-                
-                
+
+                // DELETE LATER!
+                // ipData.country_name = ipData.country_name.split(' ').join('_')
+                // ipData.asn.name = ipData.asn.name.split(' ').join('_')
+                // var insertGeodata = 'INSERT_INTO_geodata_VALUES_(\''+ip+'\',\''+ipData.latitude+'\',\''+ipData.longitude+'\',\''+ipData.country_code+'\',\''+ipData.asn.name+'\',\''+ipData.asn.domain+'\')'
+                // // console.log(insertGeodata)
+                // pullData(insertGeodata);
+                // DELETE LATER!
             }
         };
 
