@@ -1,17 +1,19 @@
 #! /usr/bin/env python3
 
-from sqlalchemy import create_engine
-import pandas as pd
 
-# cook csv into pandas dataframe
-# massage dataframe into the right shape to match the pgsql table
-# use dataframe.to_sql() 
+from sqlalchemy import create_engine
 
 #create an engine for sqlalchemy to use to connect to the database
-engine = create_engine("postgresql+psycopg2://david:491-Home%21privacy@localhost:5433/homeoverwatch")
+engine = create_engine("postgresql+psycopg2://david:491-Home%21privacy@localhost:5433/homewatch").raw_connection()
+cursor = engine.cursor()
+#open the csv file, copy into the table you want
+with open('home_company.csv', 'r') as csv:
+    cmd = 'COPY home_company_test (mac, ext, timestamp, domain) FROM STDIN WITH (FORMAT CSV, HEADER)'
+    cursor.copy_expert(cmd, csv)
+    engine.commit()
 
-#read csv file into a pandas dataframe
-df = pd.read_csv('testdata.csv')
+
+
 
 
 
