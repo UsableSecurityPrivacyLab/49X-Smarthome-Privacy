@@ -2,18 +2,28 @@
 
 ## Intro:
 > This is the database for this project, containing 3 tables which stores the packet information, devices information, and packet geodata.
-
+___
 
 ### Packets Table
 - Table consist of 8 elements
-- - **id**, (primary key) the id of the packet
+  | element| description|restriction|
+  | ------------- |:-------------| :-----|
+  | **id**| (primary key) the id of the packet
+  |**time**| the timestamp of the ip | **timestamp data, not null**
+  |**src**|source ip, the ip address of sending host|**max length 45, not null**
+  |**dst**|destination ip, the ip address of the receiving host|**max length 45, not null**
+  |**mac**|mac address, the mac address of the internal host|**max length 17, not null**
+  |**len**|packet length in bytes|**not null**
+  |**proto**|protocol/port number|**max length 10, not null**
+  |**ext**| external ip address (src or dst)|**max length 45, not null**
 
-,,,
+#### Table in SQL format
+```sql
 create table packets (
 	id SERIAL primary key,
 	time timestamp with time zone not null,
-	src varchar(45) not null, --ip address of sending host
-	dst varchar(45) not null, --ip address of receiving host
+	src varchar(45) not null,
+	dst varchar(45) not null,
 	mac varchar(17) not null, --mac address of internal host
 	len integer not null, --packet length in bytes
 	proto varchar(10) not null, --protocol if known, otherwise port number
@@ -24,17 +34,43 @@ create table packets (
 create index on packets (src);
 create index on packets (dst);
 create index on packets (time);
-,,,
+```
 
+### device Table
+- Table consist of 3
+  | element| description|restriction|
+  | ------------- |:-------------| :-----|
+  | **mac**| (primary key) the mac address of device| **max length 17**
+  |**manufacturer**| manufecturer info | **max length 40**
+  |**name**|the name of the device/info |**max length 255, DEFAULT set to 'UNKNOWN'**
+  
 
-
+#### Table in SQL format
+```sql
 drop table if exists devices cascade;
 create table devices(
 	mac varchar(17) primary key,
 	manufacturer varchar(40),
 	name varchar(255) DEFAULT 'unknown'
 );
+```
 
+
+### geodata Table
+- Table consist of 7
+  | element| description|restriction|
+  | ------------- |:-------------| :-----|
+  |****| 
+  |****|	| 
+  |****|	|****
+  |****|	|****
+  |****|	|****
+  |****|	|****
+  |****|	|****
+  |****| 	|****  
+
+#### Table in SQL format
+```sql
 drop table if exists geodata cascade;
 create table geodata(
 	ip varchar(45) primary key,
@@ -61,3 +97,7 @@ create materialized view impacts_aggregated as
 	from packets
 	group by mac, ext
 with data;
+```
+
+#### Queries used from frontend
+#### installation/acess guide for PostGreSQL
