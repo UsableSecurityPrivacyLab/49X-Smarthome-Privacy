@@ -139,7 +139,7 @@ function pullData(query) {
             // Result stored in string
             string = xmlhttp.responseText;
 
-            console.log("FETCHED FROM DB: " + string);
+            // console.log("FETCHED FROM DB: " + string);
 
             // ------------------------------------
             // 1. Call parse function

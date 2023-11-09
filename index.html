@@ -40,6 +40,8 @@
 
         <div class="title-card">
             <h1 id="current-device">No Device Selected</h1>
+            <button id="edit-title" onclick="updateName();" style="visibility: hidden; margin-right: 2vw;">Edit</button>
+            <!-- <button id="save-title" onclick="saveName();" style="visibility: hidden; margin-right: 2vw;">Save</button> -->
         </div>
 
         <div class="row-map">
@@ -145,6 +147,9 @@
 
     </div>
 
+    <!-- Invisible save button for later -->
+    <button id="save-title" onclick="saveName();" style="visibility: hidden; margin-right: 2vw;">Save</button>
+    <p id="mac-edit" style="visibility: visible;"></p>
 </body>
 
 <script src="mapScript.js"></script>
@@ -285,6 +290,7 @@
 
         pieChart.update();
         freqChart.update();
+        loadDevices();
     }
 
     setInterval(updateChart, 2000);
