@@ -99,4 +99,6 @@ with data;
 ```
 
 #### Queries used from front end
+
 #### installation/acess guide for PostGreSQL
+[PostGreSQL installation guide](https://www.postgresql.org/docs/12/tutorial-install.html)
