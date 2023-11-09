@@ -16,5 +16,4 @@ function updateDevice(name, mac){
     widget1.style.visibility = 'hidden';
     titleCard.innerText = name;
     macEdit.innerText = mac;
-
 }
