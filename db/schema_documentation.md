@@ -60,14 +60,13 @@ create table devices(
 - Table consist of 7
   | element| description|restriction|
   | ------------- |:-------------| :-----|
-  |****| 
-  |****|	| 
-  |****|	|****
-  |****|	|****
-  |****|	|****
-  |****|	|****
-  |****|	|****
-  |****| 	|****  
+  |**ip**|ip of the device|**max length 45, primary key**
+  |**lat**|latitude position| **real not null**
+  |**lon**|longitude position|**real not null**
+  |**c_code**|country code|**max length 2, not null**
+  |**c_name**|company name|**max length 55, not null**
+  |**domain**|domain of the ip address|**max length 30, not null**
+  |**tracker**|keep an eye on this ip|**boolean DEFAULT false**
 
 #### Table in SQL format
 ```sql
@@ -99,5 +98,5 @@ create materialized view impacts_aggregated as
 with data;
 ```
 
-#### Queries used from frontend
+#### Queries used from front end
 #### installation/acess guide for PostGreSQL
