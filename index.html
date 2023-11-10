@@ -26,25 +26,23 @@
 
             <h1 onclick="pullData(queryGeodata);updateAll()" class="deviceName">All</h1>
 
-            <div class="title">
-                <button id="editBtn1" class="editBtn">✎</button>
-                <h1 id="nameDiv1" class="deviceName" onclick="updateDevice()" >Echo</h1>
-            </div>
+            <div id="dynamicList">
+                <!-- Devices here will be populated from db -->
+                   
 
-            <div class="title">
-                <button id="editBtn2" class="editBtn">✎</button>
-                <h1 id="nameDiv2" class="deviceName" onclick="updateDevice()">Google Home</h1>
             </div>
-
-            <!-- <div >
-                <h1 onclick="printJSON()">TEMP</h1>
-            </div> -->
-            
 
         </div>
     </div>
+    
 
     <div id="container">
+
+        <div class="title-card">
+            <h1 id="current-device">No Device Selected</h1>
+            <button id="edit-title" onclick="updateName();" style="visibility: hidden; margin-right: 2vw;">Edit</button>
+            <!-- <button id="save-title" onclick="saveName();" style="visibility: hidden; margin-right: 2vw;">Save</button> -->
+        </div>
 
         <div class="row-map">
 
@@ -63,19 +61,22 @@
         </div>
 
 
-        <div class="dropdown">
-            <button class="dropbtn">Select Timeframe</button>
-            <div class="dropdown-content">
-                <p onclick="updateTimeScale('hour')">Previous Hour</p>
-                <p onclick="updateTimeScale('day')">Previous Day</p>
-                <p onclick="updateTimeScale('week')">Previous Week</p>
-                <p onclick="updateTimeScale('month')">Previous Month</p>
-            </div>
-        </div>
-
         <div class="row-graph">
+            
 
             <div class="freqGraph">
+
+                <div class="dropdown">
+                    <button class="dropbtn">Select Timeframe</button>
+                    <div class="dropdown-content">
+                        <p onclick="updateTimeScale('hour')">Previous Hour</p>
+                        <p onclick="updateTimeScale('day')">Previous Day</p>
+                        <p onclick="updateTimeScale('week')">Previous Week</p>
+                        <p onclick="updateTimeScale('month')">Previous Month</p>
+                    </div>
+                </div>
+
+
                 <!-- <h1>Frequency Graph</h1> -->
                 <canvas id="freqChart"></canvas>
             </div>
@@ -124,8 +125,6 @@
         <div class="row">
 
 
-
-
             <div class="card" id="card4">
                 <h1>Intruders?</h1>
 
@@ -148,6 +147,9 @@
 
     </div>
 
+    <!-- Invisible save button for later -->
+    <button id="save-title" onclick="saveName();" style="visibility: hidden; margin-right: 2vw;">Save</button>
+    <p id="mac-edit" style="visibility: visible;"></p>
 </body>
 
 <script src="mapScript.js"></script>
@@ -162,56 +164,13 @@
 <script src="node_modules/jsvectormap/dist/maps/world.js"></script>
 
 <script>
-    const queryGeodata = 'SELECT_*_FROM_geodata'
+    const queryGeodata = 'WITH_UniquePairs_AS_(SELECT_DISTINCT_ON_(lat,_lon)_*_FROM_geodata_ORDER_BY_lat,_lon,_ip_)_SELECT_*_FROM_UniquePairs'
    // const insertGeodata = 'INSERT_INTO_geodata_VALUES_(\'2.127.255.255\',\'51.273799896240234\',\'0.4977000057697296\',\'GB\',\'Sky_Uk_Limited\',\'sky.uk\')'
    // const insertPacket = 'INSERT_INTO_packets_VALUES_(\'1\',\'Wed_May_24_2023_11:00:00_GMT\',\'127.0.0.1\',\'2.127.255.255\',\'f4:8e:38:a2:50:39\',\'0\',\'5500\',\'2.127.255.255\')'
 </script>
 
+<script src="./scripts/map.js"></script>
 
-<script>
-    const world = new jsVectorMap({
-        selector: '#map1',
-        backgroundColor: '#253D5B',
-        markers: [],
-        onMarkerClick: function (event, index) {
-
-            console.log(markerData);
-            console.log(index);
-
-            var markerOrg = document.getElementById("org");
-            var markerIP = document.getElementById("ip");
-            var markerRegion = document.getElementById("region");
-            var markerDomain = document.getElementById("domain");
-
-            markerOrg.innerText = "Organization: " + markerData[index].org;
-            markerIP.innerText = "IP Address: " + markerData[index].ip;
-            markerRegion.innerText = "Region: " + markerData[index].region;
-            markerDomain.innerText = "Domain: " + markerData[index].domain;
-        },
-
-        markerStyle: {
-            initial: {
-                stroke: 'white',
-                strokeWidth: 2.5,
-                fill: '#8ce7f5',
-                fillOpacity: 1
-            },
-            hover: {
-                fill: '#06b8d4',
-            },
-        },
-
-        regionStyle: {
-            initial: {
-                fill: '#67697C',
-                stroke: "#676767",
-                strokeWidth: 0.3,
-                fillOpacity: 1
-            }
-        }
-    })
-
-</script>
 
 <!-- Pie Chart -->
 <script>
@@ -331,6 +290,7 @@
 
         pieChart.update();
         freqChart.update();
+        loadDevices();
     }
 
     setInterval(updateChart, 2000);

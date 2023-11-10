@@ -27,6 +27,8 @@ myLink.onclick = function () {
 }
 
 // Core function for calling ipdata api.
+// MANUALLY...
+// From the widget
 function fetchDataFromIP(ip) {
 
     //  Need to hide our API key...
@@ -49,9 +51,10 @@ function fetchDataFromIP(ip) {
                 const ipData = JSON.parse(this.responseText);
 
                 // console.log(ipData)
+                // console.log(new Date())
 
                 // Add timestamp to timeStamp object
-                let time = ipData.time_zone.current_time;
+                let time = new Date();
                 timeStamps[time] = timeStamps[time] ? timeStamps[time] + 1 : 1;
 
                 //add orginization name, ip, city, and region to markerData object
@@ -70,20 +73,13 @@ function fetchDataFromIP(ip) {
                 // Add orginization name to orgs array
                 var num = ipData.asn.name;
                 orgsCount[num] = orgsCount[num] ? orgsCount[num] + 1 : 1;
+                console.log(orgsCount);
 
   
                 // create a marker object and add it to the markers array
                 // addMarker(ipData.asn.name, ipData.latitude, ipData.longitude);
                 world.addMarkers({ name: ipData.asn.name, coords: [ipData.latitude, ipData.longitude] });
                 
-
-                // DELETE LATER!
-                // ipData.country_name = ipData.country_name.split(' ').join('_')
-                // ipData.asn.name = ipData.asn.name.split(' ').join('_')
-                // var insertGeodata = 'INSERT_INTO_geodata_VALUES_(\''+ip+'\',\''+ipData.latitude+'\',\''+ipData.longitude+'\',\''+ipData.country_code+'\',\''+ipData.asn.name+'\',\''+ipData.asn.domain+'\')'
-                // // console.log(insertGeodata)
-                // pullData(insertGeodata);
-                // DELETE LATER!
             }
         };
 
@@ -139,7 +135,7 @@ function pullData(query) {
             // Result stored in string
             string = xmlhttp.responseText;
 
-            console.log("FETCHED FROM DB: " + string);
+            // console.log("FETCHED FROM DB: " + string);
 
             // ------------------------------------
             // 1. Call parse function
@@ -147,6 +143,13 @@ function pullData(query) {
             // -----------------------------------
             var rows = parseString(string);
             addMarkers(rows)
+
+            // Add queried data to orgsCount for pieChart
+            // resest the orgsCount to nothing to prevent duplicates
+            orgsCount = {};
+            for(var i = 0; i < rows.length; i++){
+                orgsCount[rows[i][4]] = orgsCount[rows[i][4]] ? orgsCount[rows[i][4]] + 1 : 1;
+            }
         }
     }
     xmlhttp.send();
