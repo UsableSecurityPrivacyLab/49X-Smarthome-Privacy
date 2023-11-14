@@ -9,6 +9,7 @@ function updateAll(){
     editButton.style.visibility = 'hidden';
     widget1.style.visibility = 'visible';
     titleCard.innerText = 'All Devices';
+    macEdit.innerText = '';
 }
 
 function updateDevice(name, mac){

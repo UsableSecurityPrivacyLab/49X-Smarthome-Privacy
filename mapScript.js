@@ -53,9 +53,9 @@ function fetchDataFromIP(ip) {
                 // console.log(ipData)
                 // console.log(new Date())
 
-                // Add timestamp to timeStamp object
-                let time = new Date();
-                timeStamps[time] = timeStamps[time] ? timeStamps[time] + 1 : 1;
+                // // Add timestamp to timeStamp object
+                // let time = new Date();
+                // timeStamps[time] = timeStamps[time] ? timeStamps[time] + 1 : 1;
 
                 //add orginization name, ip, city, and region to markerData object
                 //if the ip is already in the object, do not add it again
