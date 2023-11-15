@@ -42,7 +42,7 @@ function loadDevices() {
                 var name = devices[i][1];
                 // After we have mac addresses in the geodata table, change query to 'WHERE mac = mac' instead of 'WHERE ip = 103.76.40.123';
                 var query = 'WITH_UniquePairs_AS_(SELECT_DISTINCT_ON_(lat,_lon)_*_FROM_geodata_WHERE_mac_=_\\\'' + mac + '\\\'_ORDER_BY_lat,_lon,_ip_)_SELECT_*_FROM_UniquePairs';
-                var div = '<div class="' + mac + '"><h1 class="deviceName" onclick="pullData(\'' + query + '\');updateDevice(\'' + name + '\', \'' + mac + '\')" >' + name + '</h1></div>';
+                var div = '<div class="' + mac + '"><h1 class="deviceName" onclick="updateDevice(\'' + name + '\', \'' + mac + '\', \'' + query + '\')" >' + name + '</h1></div>';
         
                 dynamicList.innerHTML += div;
         

@@ -2,50 +2,66 @@
 var macDiv = document.getElementById("mac-edit")
 
 function loadFreqGraph(timerange) {
-// Reset timeDates and timeCounts
-for(var j = 0; j < timeDates.length; j++){
-    timeDates[j] = 0;
-}
-for(var j = 0; j < timeCounts.length; j++){
-    timeCounts[j] = 0;
-}
 
 // create query based on timestamp
-let currentDate = new Date();
-if(timerange == 'hour'){
-    currentDate.setHours(currentDate.getHours() - 1);
-}
-else if(timerange == 'day'){
-    currentDate.setDate(currentDate.getDate() - 1);
-}
-else if(timerange == 'month'){
-    currentDate.setMonth(currentDate.getMonth() - 1);
-}
+    const now = new Date();
+    
+    // Get year, month, and day
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const lastMonth = String(now.getMonth()).padStart(2, '0'); // Months are zero-based
+    const day = String(now.getDate()).padStart(2, '0');
+    const yesterday = String(now.getDate()-1).padStart(2, '0');
 
-let formattedTimestamp = currentDate.toISOString().slice(0, -5);
-formattedTimestamp = formattedTimestamp.split('-').join('__');
+    // Get hours, minutes, and seconds
+    const hours = String(now.getHours()).padStart(2, '0');
+    const lastHour = String(now.getHours()).padStart(2, '0');  
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+  
+    // Construct the timestamp strings, corresponding to different time ranges
+    const minuteString = `${year}-${month}-${day}__${lastHour}:${minutes}`;
+    const hourString = `${year}-${month}-${yesterday}__${hours}:${minutes}`;
+    const dayString = `${year}-${lastMonth}-${day}__${hours}:${minutes}`;
 
     var mac = macDiv.innerText;
+
+    //resets the data in the graph before new data is added
+    data = [];
+    timeDates = [];
+    timeCounts = [];
     
+    //queries data based on the selected timescale and if a device is selected.
     if(timerange == 'hour'){
-        
         if(mac){
-            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__mac__=__\'" + mac + "\'__AND__time__\>__\'" + formattedTimestamp + "\'__GROUP__BY__minute__ORDER__BY__minute;"
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__mac__=__\'" + mac + "\'__AND__time__\>__\'" + minuteString + "\'::timestamp__GROUP__BY__minute__ORDER__BY__minute;"
             console.log(query);
         }else{
-            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__time__\>__\'" + formattedTimestamp + "\'__GROUP__BY__minute__ORDER__BY__minute;"
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__time__\>__\'" + minuteString + "\'::timestamp__GROUP__BY__minute__ORDER__BY__minute;"
             console.log(query);
         }
     }
     else if(timerange == 'day'){
-
+        if(mac){
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'MM\-DD__HH24:00\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__mac__=__\'" + mac + "\'__AND__time__\>__\'" + hourString + "\'::timestamp__GROUP__BY__minute__ORDER__BY__minute;"
+            console.log(query);
+        }else{
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'MM\-DD__HH24:00\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__time__\>__\'" + hourString + "\'::timestamp__GROUP__BY__minute__ORDER__BY__minute;"
+            console.log(query);
+        }
     }
     else if(timerange == 'month'){
-
+        if(mac){
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'MM-DD\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__mac__=__\'" + mac + "\'__AND__time__\>__\'" + dayString + "\'::timestamp__GROUP__BY__minute__ORDER__BY__minute;"
+            console.log(query);
+        }else{
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'MM-DD\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__time__\>__\'" + dayString + "\'::timestamp__GROUP__BY__minute__ORDER__BY__minute;"
+            console.log(query);
+        }
     }
     else{
         // Default query, selects all packets sorted into 30 groups.
         var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__GROUP__BY__minute__ORDER__BY__minute;"
+        //var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'MM__DD\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__GROUP__BY__minute__ORDER__BY__minute;"
     }
 
     // Check for undefined or null
@@ -89,3 +105,5 @@ formattedTimestamp = formattedTimestamp.split('-').join('__');
     xmlhttp.send();
 
 }
+
+// loadFreqGraph('month');

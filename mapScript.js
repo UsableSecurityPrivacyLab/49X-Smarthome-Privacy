@@ -78,7 +78,7 @@ function parseString(string) {
 
     var rows = string.split("~~")
 
-    for (let i = 0; i < rows.length; i++) {
+    for (let i = 0; i < rows.length-1; i++) {
 
         rows[i] = rows[i].split("__")
 
