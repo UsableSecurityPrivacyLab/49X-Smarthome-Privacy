@@ -175,6 +175,7 @@ function parseString(string) {
 
 }
 
+
 // ======================================================================
 // function which makes a marker object and adds it to the markers array
 // ======================================================================
@@ -189,6 +190,9 @@ function addMarker(row) {
 // is clicked by the user.
 // ======================================================================
 function addMarkers(rows) {
+
+    world.reset();
+    markerData = [];
 
     for (let j = 0; j < rows.length - 1; j++) {
 
@@ -231,12 +235,14 @@ function updateTimeScale(scale){
     if(scale == 'hour'){
         console.log('================ Updating timescale ================')
         date.setHours(date.getHours()-1)
-        timeScale = 'WHERE_timestamp_<_' + curDate + '_AND_timestamp_>_' + date;
+        timeScale = 'WHERE_time_>_' + curDate;
         // ---------------------------------------------------------------
         // Currently hard-coded to split on PDT. Fix this in the future.
         // ---------------------------------------------------------------
         timeScale = timeScale.split('(Pacific Daylight Time)').join('_')
         timeScale = timeScale.split(' ').join('_')
+
+        console.log(timeScale)
     }
     else if(scale == 'day'){
         console.log('================ Updating timescale ================')

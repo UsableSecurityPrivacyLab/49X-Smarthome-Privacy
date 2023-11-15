@@ -196,6 +196,9 @@ async function handleRequest(request, response) {
     let detach = request.url.split('?'); // This separates the url into 2 parts: [/getQuery] and [SELECT_*_FROM_geodata]
     let query1 = detach[1].split('__').join(' '); // This replaces '_' with ' '
     query1 = query1.split('%27').join('\'');
+    query1 = query1.split('%3E').join('>');
+
+    console.log(query1);
 
 
     // Create a new Client for connection

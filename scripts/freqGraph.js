@@ -1,7 +1,7 @@
 
 var macDiv = document.getElementById("mac-edit")
 
-function loadFreqGraph() {
+function loadFreqGraph(timerange) {
 // Reset timeDates and timeCounts
 for(var j = 0; j < timeDates.length; j++){
     timeDates[j] = 0;
@@ -10,12 +10,41 @@ for(var j = 0; j < timeCounts.length; j++){
     timeCounts[j] = 0;
 }
 
+// create query based on timestamp
+let currentDate = new Date();
+if(timerange == 'hour'){
+    currentDate.setHours(currentDate.getHours() - 1);
+}
+else if(timerange == 'day'){
+    currentDate.setDate(currentDate.getDate() - 1);
+}
+else if(timerange == 'month'){
+    currentDate.setMonth(currentDate.getMonth() - 1);
+}
+
+let formattedTimestamp = currentDate.toISOString().slice(0, -5);
+formattedTimestamp = formattedTimestamp.split('-').join('__');
 
     var mac = macDiv.innerText;
+    
+    if(timerange == 'hour'){
+        
+        if(mac){
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__mac__=__\'" + mac + "\'__AND__time__\>__\'" + formattedTimestamp + "\'__GROUP__BY__minute__ORDER__BY__minute;"
+            console.log(query);
+        }else{
+            var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__time__\>__\'" + formattedTimestamp + "\'__GROUP__BY__minute__ORDER__BY__minute;"
+            console.log(query);
+        }
+    }
+    else if(timerange == 'day'){
 
-    if(mac){
-        var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__WHERE__mac__=__\'" + mac + "\'__GROUP__BY__minute__ORDER__BY__minute;"
-    }else{
+    }
+    else if(timerange == 'month'){
+
+    }
+    else{
+        // Default query, selects all packets sorted into 30 groups.
         var query = "SELECT__TO_CHAR(DATE_TRUNC(\'minute\'\,__time)\,__\'HH24:MI\')__AS__minute\,__COUNT(*)__AS__count__FROM__packets__GROUP__BY__minute__ORDER__BY__minute;"
     }
 
