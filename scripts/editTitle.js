@@ -115,5 +115,4 @@ function saveName(){
 
 
 // Call this whenever page is loaded
-// 
 loadDevices();
