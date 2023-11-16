@@ -1,5 +1,6 @@
 var widget1 = document.getElementById('card4');
 var titleCard = document.getElementById('current-device');
+var traffic = document.getElementById('trafficBox');
 var editButton = document.getElementById('edit-title');
 var macEdit = document.getElementById('mac-edit');
 
@@ -9,6 +10,7 @@ var macEdit = document.getElementById('mac-edit');
 function updateAll(queryGeodata){
     editButton.style.visibility = 'hidden';
     widget1.style.visibility = 'visible';
+    traffic.style.visibility = 'visible';
     titleCard.innerText = 'All Devices';
     macEdit.innerText = '';
     setTimeout(function(){
@@ -20,6 +22,7 @@ function updateAll(queryGeodata){
 function updateDevice(name, mac, queryGeodata){
     editButton.style.visibility = 'visible';
     widget1.style.visibility = 'hidden';
+    traffic.style.visibility = 'hidden';
     titleCard.innerText = name;
     macEdit.innerText = mac;
     setTimeout(function(){

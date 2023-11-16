@@ -248,6 +248,69 @@ async function handleRequest(request, response) {
     }
 
   }
+  else if (path === '/loadTraffic'){
+
+    // Parse our query from request.url
+    //  
+    let detach = request.url.split('?'); // This separates the url into 2 parts: [/getQuery] and [SELECT_*_FROM_geodata]
+    let query1 = detach[1].split('_').join(' '); // This replaces '_' with ' '
+    query1 = query1.split('%27').join('\'');
+    query1 = query1.split('%3E').join('>');
+    query1 = query1.split('%2E').join('.');
+
+
+    console.log(query1);
+
+
+    // Create a new Client for connection
+    const client = new Client({
+      user: 'david',
+      host: 'localhost',
+      database: 'homewatch',
+      password: '491-Home!privacy',
+      port: 5433,
+    });
+
+
+    console.log('request received');
+    try {
+      if (!connected) { // Connect to db if not already connected
+        await client.connect();
+        connected = true;
+        console.log('====== Connection to db successful! ======');
+      }
+      const res = await client.query(query1); // Call actual query
+      try {await client.end() // Disconnect from db
+        connected = false;
+        console.log("====== client disconnected ======")
+      } catch {
+        console.log("failed to disconnect client")
+        connected = true;
+      }
+  
+
+      var data = "";
+
+      for (let i = 0; i < res.rows.length; i++) {
+        data += res.rows[i].mac + "__";
+        data += res.rows[i].tlen + "__";
+        data += res.rows[i].name + "~~";
+      }
+      
+      // console.log(res);
+
+      response.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+      response.writeHead(200, { 'Content-Type': 'text/plain' });
+      response.end(data); // Return value
+      console.log('string sent');
+      
+    } catch (err) {
+      console.error('Query error:', err);
+      response.writeHead(500, { 'Content-Type': 'text/plain' });
+      response.end('Internal Server Error');
+    }
+
+  }
   else{
     fs.readFile('./index.html', function (err, file) {
       if (err) {
