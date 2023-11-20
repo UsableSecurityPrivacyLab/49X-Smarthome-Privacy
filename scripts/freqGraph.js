@@ -80,7 +80,7 @@ function loadFreqGraph(timerange) {
 
 
     xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", "http://localhost:3000/packets?" + query, true);
+    xmlhttp.open("GET", "http://localhost:3000/frequency?" + query, true);
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 

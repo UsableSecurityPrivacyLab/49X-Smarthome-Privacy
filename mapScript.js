@@ -32,7 +32,7 @@ function pullData(query) {
 
     // Check for proper format. No ' '.
     if (query.includes(' ')) {
-        const err = "***** Query improper format. Replace all ' ' with '_' ";
+        const err = "***** Query improper format. Replace all ' ' with '__' ";
         console.error(err);
         return err;
     }

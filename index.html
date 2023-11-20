@@ -18,8 +18,8 @@
 </head>
 
 <body>
-    <!-- <body> -->
 
+<!-- Device List -->
     <div class="devices">
         <img class="logo" src="images/logo.jpg" alt="logo">
         <div class="dList">
@@ -28,8 +28,6 @@
 
             <div id="dynamicList">
                 <!-- Devices here will be populated from db -->
-                   
-
             </div>
 
         </div>
@@ -131,12 +129,6 @@
 
         </div>
 
-
-        <!-- <div class="card"></div> -->
-
-        <!-- Hidden images -->
-        <img src="images/map4.svg" alt="World Map" id="mapImg" style="display: none;">
-
     </div>
 
     <!-- Invisible save button for later -->
@@ -157,7 +149,7 @@
 <script src="node_modules/jsvectormap/dist/maps/world.js"></script>
 
 <script>
-    const queryGeodata = 'WITH_UniquePairs_AS_(SELECT_DISTINCT_ON_(lat,_lon)_*_FROM_geodata_ORDER_BY_lat,_lon,_ip_)_SELECT_*_FROM_UniquePairs'
+    const queryGeodata = 'WITH__UniquePairs__AS__(SELECT__DISTINCT__ON__(lat,__lon)__*__FROM__geodata__ORDER__BY__lat,__lon,__ip__)__SELECT__*__FROM__UniquePairs'
 </script>
 
 <script src="./scripts/map.js"></script>

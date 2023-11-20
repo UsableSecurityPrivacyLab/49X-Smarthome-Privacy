@@ -1,3 +1,7 @@
+// This file is for getting the device list and displaying and changing the name of the selected device.
+// It also invokes itself at the bottom of the file.
+
+
 var dynamicList = document.getElementById("dynamicList");
 var devices;
 
@@ -5,7 +9,7 @@ var devices;
 // Query devices table mac addresses & names
 function loadDevices() {
 
-    var query = "SELECT_mac,_name_FROM_devices;"
+    var query = "SELECT__mac,__name__FROM__devices;"
 
     // Check for undefined or null
     if (query === undefined) {
@@ -16,12 +20,13 @@ function loadDevices() {
 
     // Check for proper format. No ' '.
     if (query.includes(' ')) {
-        const err = "***** Query improper format. Replace all ' ' with '_' ";
+        const err = "***** Query improper format. Replace all ' ' with '__' ";
         console.error(err);
         return err;
     }
 
-
+    // This XMLHttpRequest creates a GET request with a constructed url. 
+    // The URL has the port used to communicate over the Node.JS server, a path that is used in parsing and a query that will be passed along to the database.
     xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "http://localhost:3000/loadDevices?" + query, true);
     xmlhttp.onreadystatechange = function () {
@@ -35,13 +40,14 @@ function loadDevices() {
             // console.log(devices);
 
 
+            //deconstruct the returned string of data into variables we can use on the webpage.
             dynamicList.innerHTML = '';
             for(var i = 0; i < devices.length-1; i++){
 
                 var mac = devices[i][0];
                 var name = devices[i][1];
                 // After we have mac addresses in the geodata table, change query to 'WHERE mac = mac' instead of 'WHERE ip = 103.76.40.123';
-                var query = 'WITH_UniquePairs_AS_(SELECT_DISTINCT_ON_(lat,_lon)_*_FROM_geodata_WHERE_mac_=_\\\'' + mac + '\\\'_ORDER_BY_lat,_lon,_ip_)_SELECT_*_FROM_UniquePairs';
+                var query = 'WITH__UniquePairs__AS__(SELECT__DISTINCT__ON__(lat,__lon)__*__FROM__geodata__WHERE__mac__=__\\\'' + mac + '\\\'__ORDER__BY__lat,__lon,__ip__)__SELECT__*__FROM__UniquePairs';
                 var div = '<div class="' + mac + '"><h1 class="deviceName" onclick="updateDevice(\'' + name + '\', \'' + mac + '\', \'' + query + '\')" >' + name + '</h1></div>';
         
                 dynamicList.innerHTML += div;
@@ -81,10 +87,10 @@ function saveName(){
     title.style.border = 'none';
     title.style.color = 'white';
 
-    newTitle = title.innerText.split(' ').join('_');
+    newTitle = title.innerText.split(' ').join('__');
     
 
-    var updateQuery = 'UPDATE_devices_SET_name_=_\'' + newTitle +'\'_WHERE_mac_=_\'' + macEdit.innerText + '\';'; 
+    var updateQuery = 'UPDATE__devices__SET__name__=__\'' + newTitle +'\'__WHERE__mac__=__\'' + macEdit.innerText + '\';'; 
     // console.log(updateQuery)
     if (updateQuery === undefined) {
         const err = "***** Empty Query.";
@@ -94,7 +100,7 @@ function saveName(){
 
     // Check for proper format. No ' '.
     if (updateQuery.includes(' ')) {
-        const err = "***** Query improper format. Replace all ' ' with '_' ";
+        const err = "***** Query improper format. Replace all ' ' with '__' ";
         console.error(err);
         return err;
     }
