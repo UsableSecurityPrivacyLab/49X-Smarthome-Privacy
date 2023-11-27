@@ -21,10 +21,9 @@ class dbManager():
         try:
             sys.stdout.write("Connecting to database...")
             self.connection = psycopg2.connect("host=localhost dbname=%(dbname)s user=%(username)s password=%(password)s" % {'dbname':dbname,'username':username,'password':password })
-            print("ok")
-        except psycopg2.OperationalError as e:
+            sys.stdout.write("ok")
+        except:
             print("error\n")
-            print('Unable to connect!\n{0}').format(e)
             sys.exit(1)
 
     def listen(self, channel, cb=None):
