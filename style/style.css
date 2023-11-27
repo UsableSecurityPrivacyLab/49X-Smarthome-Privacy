@@ -1,11 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
+
 :root{
-    --color1: #635985;
+    /* --color1: #635985;
     --color2: #443C68;
     --color3: #393053;
-    --color4: #18122B;
+    --color4: #18122B; */
+
+    --color1: #253D5B;
+    --color2: #969696;
+    --color3: #B79D94;
+    --color4: #67697C;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Lacquer&display=swap');
 
 
 #fetchLink:hover{
@@ -27,6 +33,12 @@ body{
     margin: 0;
 }
 
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #container{
     display: flex;
     flex-direction: column;
@@ -41,6 +53,33 @@ body{
     margin-left: 20vw;
     padding-top: 2vw;
 
+}
+
+.title-card{
+
+    width: 90%;
+    height: 7vh;
+
+    margin-right: 2vw;
+
+    display: flex;
+    /* flex-direction: column; */
+    margin-bottom: 2vh;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    
+    background-color: var(--color1);
+    border: 7px solid var(--color2);
+    border-radius: 4%;
+
+    color: aliceblue;
+
+    overflow: hidden;
+}
+.title-card h1{
+    margin-top: 2vh;
+    margin-left: 2vw;
 }
 
 .card{
@@ -151,28 +190,36 @@ body{
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-left: 1vw;
+    margin-top: 1vw;
+  }
+
+  .dropbtn{
+    background-color: var(--color2);
+    border: 2px solid var(--color4);
+    color: white;
   }
   
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: var(--color2);
     min-width: 160px;
     z-index: 1;
     padding: 0;
     margin: 0;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color4);
   }
   
   .dropdown-content p {
     display: block;
     padding: 8px 16px;
     text-decoration: none;
-    color: black;
+    color: white;
   }
 
   .dropdown-content p:hover{
-    background-color: var(--color2);
+    background-color: var(--color3);
     color: aliceblue;
   }
   
@@ -203,7 +250,7 @@ body{
     margin-bottom: 2vh;
     margin-right: 2vw;
 }
-.dList h1:hover{
+.dList .deviceName:hover{
     cursor: pointer;
     color: var(--color3);
 }
@@ -259,3 +306,15 @@ body{
 #freqChart{
     margin-left: 2vw;
 }
+
+.editBtn{
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    margin-right: 10px;
+    width: 30px;
+}
+
+/* .times{
+    display: flex;
+    justify-content: space-around;
+} */

@@ -17,7 +17,6 @@ class dbManager():
         if password is None:
             password = CONFIG['postgresql']['password']
 
-
         try:
             sys.stdout.write("Connecting to database...")
             self.connection = psycopg2.connect("host=localhost dbname=%(dbname)s user=%(username)s password=%(password)s" % {'dbname':dbname,'username':username,'password':password })
