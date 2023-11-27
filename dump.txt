@@ -1,0 +1,166 @@
+>>> capture = pyshark.LiveCapture(interface='wlan0')
+>>> capture.sniff(timeout=30)
+>>> capture
+<LiveCapture (1 packets)>
+>>> print(capture[0])
+Packet (Length: 0)
+Layer ERF
+:	Timestamp: 0x000000800a0d0d0a
+	Record type: 0x4d (Type 77: Unknown Type)
+	.100 1101 = Type: Unknown (77)
+	0... .... = Extension header present: 0
+	Flags: 0x3c (Capture Interface: 0; ERF Truncation Error; ERF Rx Error; ERF DS Error)
+	.... ..00 = Capture interface: 0
+	.... .1.. = Varying record length: 1
+	.... 1... = Truncated: 1
+	Expert Info (Error/Checksum): ERF Truncation Error
+	ERF Truncation Error
+	Severity level: Error
+	Group: Checksum
+	...1 .... = RX error: 1
+	..1. .... = DS error: 1
+	00.. .... = Reserved: 0x0
+	Record length: 11034
+	Loss counter: 256
+	Packet loss occurred between previous and current packet
+	Wire length: 0
+	Expert Info (Error/Checksum): ERF Rx Error
+	Expert Info (Error/Checksum): ERF DS Error
+	Expert Info (Warning/Sequence): Packet loss occurred between previous and current packet
+	ERF Rx Error
+	ERF DS Error
+	Severity level: Error
+	Severity level: Error
+	Severity level: Warning
+	Group: Checksum
+	Group: Checksum
+	Group: Sequence
+
+>>> capture = pyshark.LiveCapture(interface='eth0')
+>>> capture.sniff(timeout=30)
+>>> capture
+<LiveCapture (13 packets)>
+>>> print(capture[0])
+Packet (Length: 0)
+Layer ERF
+:	Timestamp: 0x000000800a0d0d0a
+	Record type: 0x4d (Type 77: Unknown Type)
+	.100 1101 = Type: Unknown (77)
+	0... .... = Extension header present: 0
+	Flags: 0x3c (Capture Interface: 0; ERF Truncation Error; ERF Rx Error; ERF DS Error)
+	.... ..00 = Capture interface: 0
+	.... .1.. = Varying record length: 1
+	.... 1... = Truncated: 1
+	Expert Info (Error/Checksum): ERF Truncation Error
+	ERF Truncation Error
+	Severity level: Error
+	Group: Checksum
+	...1 .... = RX error: 1
+	..1. .... = DS error: 1
+	00.. .... = Reserved: 0x0
+	Record length: 11034
+	Loss counter: 256
+	Packet loss occurred between previous and current packet
+	Wire length: 0
+	Expert Info (Error/Checksum): ERF Rx Error
+	Expert Info (Error/Checksum): ERF DS Error
+	Expert Info (Warning/Sequence): Packet loss occurred between previous and current packet
+	ERF Rx Error
+	ERF DS Error
+	Severity level: Error
+	Severity level: Error
+	Severity level: Warning
+	Group: Checksum
+	Group: Checksum
+	Group: Sequence
+
+>>> print(capture[1])
+Packet (Length: 28692)
+Layer ERF
+:	Timestamp: 0x778ee94dda7eeefd
+	Record type: 0x1b (Type 27: META)
+	.001 1011 = Type: META (27)
+	0... .... = Extension header present: 0
+	Flags: 0x7c (Capture Interface: 0; ERF Truncation Error; ERF Rx Error; ERF DS Error)
+	.... ..00 = Capture interface: 0
+	.... .1.. = Varying record length: 1
+	.... 1... = Truncated: 1
+	Expert Info (Error/Checksum): ERF Truncation Error
+	ERF Truncation Error
+	Severity level: Error
+	Group: Checksum
+	...1 .... = RX error: 1
+	..1. .... = DS error: 1
+	01.. .... = Reserved: 0x1
+	Record length: 38912
+	Loss counter: 42037
+	Packet loss occurred between previous and current packet
+	Wire length: 28692
+	Unknown: [Invalid]
+	Tag Type: Unknown (1009)
+	Tag Length: 42865
+	Provenance truncated tag
+	Provenance truncated record
+	Expert Info (Error/Checksum): ERF Rx Error
+	Expert Info (Error/Checksum): ERF DS Error
+	Expert Info (Warning/Sequence): Packet loss occurred between previous and current packet
+	Expert Info (Error/Protocol): Provenance truncated tag
+	Expert Info (Error/Malformed): Provenance truncated record
+	ERF Rx Error
+	ERF DS Error
+	Severity level: Error
+	Severity level: Error
+	Severity level: Warning
+	Severity level: Error
+	Severity level: Error
+	Group: Checksum
+	Group: Checksum
+	Group: Sequence
+	Group: Protocol
+	Group: Malformed
+
+>>> print(capture[2])
+Packet (Length: 0)
+Layer ERF
+:	Timestamp: 0x0006000005dc0000
+	Record type: 0x00 (Type 0: LEGACY)
+	.000 0000 = Type: LEGACY (0)
+	0... .... = Extension header present: 0
+	Flags: 0x00 (Capture Interface: 0)
+	.... ..00 = Capture interface: 0
+	.... .0.. = Varying record length: 0
+	.... 0... = Truncated: 0
+	...0 .... = RX error: 0
+	..0. .... = DS error: 0
+	00.. .... = Reserved: 0x0
+	Record length: 56325
+	Loss counter: 0
+	Wire length: 0
+
+>>> print(capture[3])
+Packet (Length: 55833)
+Layer ERF
+:	Timestamp: 0x8cdb96b28a160250
+	Record type: 0x7b (Type 123: Unknown Type)
+	.111 1011 = Type: Unknown (123)
+	0... .... = Extension header present: 0
+	Flags: 0xa6 (Capture Interface: 2; ERF DS Error)
+	.... ..10 = Capture interface: 2
+	.... .1.. = Varying record length: 1
+	.... 0... = Truncated: 0
+	...0 .... = RX error: 0
+	..1. .... = DS error: 1
+	Expert Info (Error/Checksum): ERF DS Error
+	ERF DS Error
+	Severity level: Error
+	Group: Checksum
+	10.. .... = Reserved: 0x2
+	Record length: 60761
+	Loss counter: 36255
+	Packet loss occurred between previous and current packet
+	Wire length: 55833
+	Expert Info (Warning/Sequence): Packet loss occurred between previous and current packet
+	Severity level: Warning
+	Group: Sequence
+DATA
+
