@@ -38,7 +38,13 @@
 
         <div class="title-card">
             <h1 id="current-device">No Device Selected</h1>
-            <button id="edit-title" onclick="updateName();" style="visibility: hidden; margin-right: 2vw;">Edit</button>
+            <div class="title-buttons">
+                <!-- <button id="edit-trusted" onclick="updateTrusted()" style="visibility: hidden; ">Trusted</button> -->
+                <label for="edit-trusted" id="edit-trusted-label" style="visibility: hidden;">Trust</label>
+                <input type="checkbox" id="edit-trusted" class="edit-trusted" name="edit-trusted" value="true" style="visibility: hidden;">
+                
+                <button id="edit-title" onclick="updateName();" style="visibility: hidden; margin-right: 2vw;">Edit</button>
+            </div>
             <!-- <button id="save-title" onclick="saveName();" style="visibility: hidden; margin-right: 2vw;">Save</button> -->
         </div>
 
@@ -107,14 +113,12 @@
 
 
             <div class="card" id="card4">
-                <h1>Intruders?</h1>
+                <h1>Untrusted Devices?</h1>
 
 
-                <h3 class="known-occupents">Number of known occupents: 4</h3>
-                <h3 class="predicted-occupents">Predicted # of current occupents: 6</h3>
-                <h3 class="intruders">Possible # of Intruders: 2</h3>
+                <h3 id="known-devices" class="known-occupents">Number of known devices: 0</h3>
+                <h3 id="unknown-devices" class="intruders">Number of unknown devices: 0</h3>
 
-                <p>W.I.P. Figure out how to determine how many iphones are on the network...</p>
             </div>
 
 

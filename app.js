@@ -112,7 +112,8 @@ async function handleRequest(request, response) {
 
       for (let i = 0; i < res.rows.length; i++) {
         data += res.rows[i].mac + "__";
-        data += res.rows[i].name + "~~";
+        data += res.rows[i].name + "__";
+        data += res.rows[i].trusted + "~~";
       }
 
       console.log(data);
