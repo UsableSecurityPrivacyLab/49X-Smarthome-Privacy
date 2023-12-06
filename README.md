@@ -1,4 +1,27 @@
-# 49X-Smarthome-Privacy
+## 49X-Smarthome-Privacy
+
+
+Install postgresql and start a cluster-this will be different depending on your operating system. Consult the documentation at https://www.postgresql.org/download.
+
+Once you have a cluster up and running, create a new user with enough rights to create, read from, and write to tables. Put the username and password for this postgres user
+into the config file (config/config.cfg). Additionally, make sure the port is accurate in the database connection string in db/databaseBursts.py.
+
+For the python dependancies, create a new python environment, run it, then install the packages with the commands below. 
+
+```
+python3 -m venv <python-env-filename>
+
+source <python-env-filename>/bin/activate
+
+pip install -r requirements.txt
+```
+
+Now, you should be able to run scripts/reset-database.py to set up the postgres database according to db/schema.sql.
+For additional help and documentation, you can also consult the original Aretha repository at:
+https://github.com/OxfordHCC/Aretha
+
+Many thanks to them.
+
 
 To start the dashboard, you need to have index.html hosted on a local server.
 There a many ways to do this, including using a vs code extension called live server.
