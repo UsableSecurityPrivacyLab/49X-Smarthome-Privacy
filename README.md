@@ -50,6 +50,7 @@ you will only see the 'All' button. Selecting any of these options will populate
 
 ![Image of widgets](./images/widgets.png)
 
+### Script files
 
 As stated before, app.js is the node server application that is used to query the database for the dashboard webpage. This must be running for any of the data to be queried and displayed. Broadly speaking, it takes an XMLHttp request and parses the arguments as a database query, queries the database and returns the data.
 
@@ -67,8 +68,7 @@ freqGraph.js handles the frequency graph. It takes the time scale that is select
 
 mostTraffic.js is run once on refresh of the website. It updates the most traffic widget with information on which device on the network has transmitted the most data, measured in KB.
 
-
-Links to packages used:
+### Links to packages used:
 
 JS Vector map: https://jvm-docs.vercel.app/docs/introduction
 
