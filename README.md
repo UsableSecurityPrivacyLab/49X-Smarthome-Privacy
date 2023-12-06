@@ -1,5 +1,11 @@
 ## 49X-Smarthome-Privacy
 
+### Project Overview
+
+This project's purpose is to display data and statistics about network traffic gathered from smart-home devices on your home network. The dashboard displays various information such as geolocation data, ping frequency, and most traffic by device.
+
+
+### Installing the local database
 
 Install postgresql and start a cluster-this will be different depending on your operating system. Consult the documentation at https://www.postgresql.org/download.
 
@@ -22,6 +28,7 @@ https://github.com/OxfordHCC/Aretha
 
 Many thanks to them.
 
+### Running the dashboard
 
 To start the dashboard, you need to have index.html hosted on a local server.
 There a many ways to do this, including using a vs code extension called live server.
