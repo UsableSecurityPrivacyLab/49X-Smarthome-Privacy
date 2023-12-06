@@ -18,18 +18,16 @@
 </head>
 
 <body>
-    <!-- <body> -->
 
+<!-- Device List -->
     <div class="devices">
         <img class="logo" src="images/logo.jpg" alt="logo">
         <div class="dList">
 
-            <h1 onclick="pullData(queryGeodata);updateAll()" class="deviceName">All</h1>
+            <h1 onclick="updateAll(queryGeodata)" class="deviceName">All</h1>
 
             <div id="dynamicList">
                 <!-- Devices here will be populated from db -->
-                   
-
             </div>
 
         </div>
@@ -40,7 +38,13 @@
 
         <div class="title-card">
             <h1 id="current-device">No Device Selected</h1>
-            <button id="edit-title" onclick="updateName();" style="visibility: hidden; margin-right: 2vw;">Edit</button>
+            <div class="title-buttons">
+                <!-- <button id="edit-trusted" onclick="updateTrusted()" style="visibility: hidden; ">Trusted</button> -->
+                <label for="edit-trusted" id="edit-trusted-label" style="visibility: hidden;">Trust</label>
+                <input type="checkbox" id="edit-trusted" class="edit-trusted" name="edit-trusted" value="true" style="visibility: hidden;">
+                
+                <button id="edit-title" onclick="updateName();" style="visibility: hidden; margin-right: 2vw;">Edit</button>
+            </div>
             <!-- <button id="save-title" onclick="saveName();" style="visibility: hidden; margin-right: 2vw;">Save</button> -->
         </div>
 
@@ -69,12 +73,13 @@
                 <div class="dropdown">
                     <button class="dropbtn">Select Timeframe</button>
                     <div class="dropdown-content">
-                        <p onclick="updateTimeScale('hour')">Previous Hour</p>
-                        <p onclick="updateTimeScale('day')">Previous Day</p>
-                        <p onclick="updateTimeScale('week')">Previous Week</p>
-                        <p onclick="updateTimeScale('month')">Previous Month</p>
+                        <p onclick="loadFreqGraph('hour')">Previous Hour</p>
+                        <p onclick="loadFreqGraph('day')">Previous Day</p>
+                        <p onclick="loadFreqGraph('month')">Previous Month</p>
                     </div>
                 </div>
+
+                <button id="feq-wip" onclick="loadFreqGraph('wip');">ALL</button>
 
 
                 <!-- <h1>Frequency Graph</h1> -->
@@ -85,10 +90,14 @@
 
         <div class="row">
 
-
-
-
             <div class="card">
+                <div id="chartBox">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+
+
+            <div class="card" id="trafficBox">
                 <h1>Most Traffic</h1>
 
                 <h3>by Device</h3>
@@ -99,25 +108,21 @@
                     <li>---</li>
                 </ul>
 
-                <p>W.I.P. Figure out how which devices are using the most network traffic...</p>
             </div>
 
 
-            <div class="card">
-                <h1>Manual Entry</h1>
-                <p>This widget is for for testing purposes.</p>
-                <form action="" method="post">
-                    <input type="text" id="ipInput" name="ip_address" placeholder="Enter IP Address...">
-                    <p id="fetchLink"> Fetch </p>
-                </form>
+
+            <div class="card" id="card4">
+                <h1>Untrusted Devices?</h1>
+
+
+                <h3 id="known-devices" class="known-occupents">Number of known devices: 0</h3>
+                <h3 id="unknown-devices" class="intruders">Number of unknown devices: 0</h3>
+
             </div>
 
 
-            <div class="card">
-                <div id="chartBox">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
+
 
         </div>
 
@@ -125,25 +130,8 @@
         <div class="row">
 
 
-            <div class="card" id="card4">
-                <h1>Intruders?</h1>
-
-
-                <h3 class="known-occupents">Number of known occupents: 4</h3>
-                <h3 class="predicted-occupents">Predicted # of current occupents: 6</h3>
-                <h3 class="intruders">Possible # of Intruders: 2</h3>
-
-                <p>W.I.P. Figure out how to determine how many iphones are on the network...</p>
-            </div>
-
 
         </div>
-
-
-        <!-- <div class="card"></div> -->
-
-        <!-- Hidden images -->
-        <img src="images/map4.svg" alt="World Map" id="mapImg" style="display: none;">
 
     </div>
 
@@ -152,11 +140,12 @@
     <p id="mac-edit" style="visibility: visible;"></p>
 </body>
 
+<script src="./scripts/mostTraffic.js"></script>
 <script src="mapScript.js"></script>
-<script src="fillOurDatabasePls.js"></script>
 <script src="./scripts/updateWidgets.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./scripts/editTitle.js"></script>
+<script src="./scripts/freqGraph.js"></script>
 
 <!-- JS Vector map -->
 
@@ -164,9 +153,7 @@
 <script src="node_modules/jsvectormap/dist/maps/world.js"></script>
 
 <script>
-    const queryGeodata = 'WITH_UniquePairs_AS_(SELECT_DISTINCT_ON_(lat,_lon)_*_FROM_geodata_ORDER_BY_lat,_lon,_ip_)_SELECT_*_FROM_UniquePairs'
-   // const insertGeodata = 'INSERT_INTO_geodata_VALUES_(\'2.127.255.255\',\'51.273799896240234\',\'0.4977000057697296\',\'GB\',\'Sky_Uk_Limited\',\'sky.uk\')'
-   // const insertPacket = 'INSERT_INTO_packets_VALUES_(\'1\',\'Wed_May_24_2023_11:00:00_GMT\',\'127.0.0.1\',\'2.127.255.255\',\'f4:8e:38:a2:50:39\',\'0\',\'5500\',\'2.127.255.255\')'
+    const queryGeodata = 'WITH__UniquePairs__AS__(SELECT__DISTINCT__ON__(lat,__lon)__*__FROM__geodata__ORDER__BY__lat,__lon,__ip__)__SELECT__*__FROM__UniquePairs'
 </script>
 
 <script src="./scripts/map.js"></script>
@@ -194,7 +181,7 @@
                 orgNames
             },
             datasets: [{
-                label: 'Number of Pings',
+                label: 'Locations Pinged',
                 data: orgCounts,
                 borderWidth: 1,
             }]

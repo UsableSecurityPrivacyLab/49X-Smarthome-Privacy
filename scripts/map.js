@@ -1,3 +1,5 @@
+    // This is the JSVectormap World map config. It is accessed by Index
+    
     const world = new jsVectorMap({
         selector: '#map1',
         backgroundColor: '#253D5B',
