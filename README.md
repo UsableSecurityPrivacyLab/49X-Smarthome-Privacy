@@ -4,6 +4,8 @@
 
 This project's purpose is to display data and statistics about network traffic gathered from smart-home devices on your home network. The dashboard displays various information such as geolocation data, ping frequency, and most traffic by device.
 
+This project was designed with Aretha in mind to sniff and categorize packets into the schema, but any packet sniffer that can conform to the schema can be used. That schema can be found in the repository. Once data is populated to the schema, a node.js server can be run on the machine with the database, this server is used as an intermediary between the DB and the webpage.
+
 
 ### Installing the local database
 
